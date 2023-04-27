@@ -1,0 +1,34 @@
+@import 'theme/_primary'
+@import 'state/_typografy'
+@import 'layout/_variables'
+
+:host
+  display: block
+
+.metric-tile
+  display: grid
+  grid-template-areas: "icon value" "icon label"
+  grid-template-columns: 40px 1fr
+  grid-column-gap: 10px
+  height: 100%
+
+.tile__icon
+  align-items: center
+  align-self: center
+  background-color: #fdeceb
+  border-radius: 50%
+  color: red
+  display: flex
+  grid-area: icon
+  height: 38px
+  justify-content: center
+  width: 38px
+
+.tile__value
+  font-weight: 600
+  grid-area: value
+
+.tile__label
+  grid-area: label
+  color: $cool-grey
+  font-size: $text-xs

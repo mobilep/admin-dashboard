@@ -1,0 +1,16 @@
+<div class="wrapper_header container container-padding"></div>
+
+<div class="wrapper_content container container-padding container-white">
+  <div *ngIf="!companies?.length" class="not-company">
+    <div class="row">
+      <div class="offset-3"></div>
+      <div class="col-sm-6">
+        <div class="btn btn_large btn_margin-bottom" (click)="addCompany()" (touchend)="addCompany()" translate>
+          addYourFirstCompany
+        </div>
+      </div>
+      <div class="push-3"></div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

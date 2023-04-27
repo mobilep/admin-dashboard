@@ -1,0 +1,254 @@
+@import "../theme/primary"
+
+*
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  box-sizing: border-box
+  -moz-box-sizing: border-box
+  -webkit-box-sizing: border-box
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+  -webkit-tap-highlight-color: transparent
+
+html, body
+  height: auto
+  min-height: 100%
+
+div
+  &:focus
+    outline: none
+
+body
+  height: 100%
+  color: $primaryText
+  background-color: $bodyBackgroundColor
+  min-width: 320px
+
+router-outlet
+  display: block
+
+a
+  color: $primaryLinks
+  text-decoration: none
+  &:hover
+    color: $primaryLinksHover
+    cursor: pointer
+  &:focus
+    outline: 1px solid $dodger-blue
+
+.link
+  color: $primaryLinks
+  text-decoration: none
+  &:hover
+    color: $primaryLinksHover
+    cursor: pointer
+  &:focus
+    outline: 1px solid $dodger-blue
+  &_red
+    color: $menuLinks
+    &:hover
+      color: $menuLinksHover
+      cursor: pointer
+    &:focus
+      outline: none
+  &_disabled
+    pointer-events: none
+    cursor: no-drop
+
+.wrapper
+  &_header
+    min-height: 65px
+    border-top: 1px solid $borderColor
+  &_content
+    min-height: calc(100vh - 155px)
+    border-top: 1px solid $borderColor
+
+.container
+  &-white
+    background-color: white
+  &-border
+    &-top
+      border-top: 1px solid $borderColor
+    &-bottom
+      border-bottom: 1px solid $borderColor
+
+.container-padding
+  padding: 15px
+  @media (min-width: 992px)
+    padding: 15px 13%
+  @media (min-width: 1260px)
+    padding: 15px 130px
+
+.text
+  &-left
+    text-align: left
+  &-center
+    text-align: center
+  &-right
+    text-align: right
+  &-red
+    color: $red
+  &-green
+    color: #5BC236
+  &-lowercase
+    text-transform: lowercase
+
+.error
+  font-size: 14px
+  margin-bottom: 20px
+
+.mat-dialog-container
+  border-radius: 5px !important
+  margin: 0 auto
+  position: relative
+
+.upload-record-video__dialog .mat-dialog-container
+  overflow: visible
+  padding: 0
+
+.dialog-close
+  display: block
+  position: absolute
+  width: 30px
+  height: 30px
+  right: 10px
+  top: 10px
+  z-index: 3
+  font-size: 0
+  &:hover
+    cursor: pointer
+    &:before, &:after
+      background: darken(#93989A, 20%)
+  &:active
+    &:before, &:after
+      background: darken(#93989A, 30%)
+  &:before, &:after
+    transition: all 0.4s
+    content: ''
+    position: absolute
+    width: 14px
+    height: 3px
+    background: #c8cacb
+    margin: auto
+    top: 0
+    left: 0
+    right: 0
+    border-radius: 28%
+    bottom: 0
+  &:before
+    transform: rotate(46deg)
+  &:after
+    transform: rotate(-46deg)
+
+.icon-check
+  width: 15px
+  height: 17px
+  background: url('assets/check.svg') center no-repeat
+  background-size: 15px 17px
+  display: inline-block
+  vertical-align: middle
+  margin-right: 5px
+
+.relative
+  position: relative
+
+pre
+  margin: 0
+  padding: 0
+
+.mat
+  &-dialog-container
+    max-height: 90vh
+  &-table
+    overflow: hidden !important
+
+[hidden]
+  display: none !important
+
+.pointer
+  &:hover
+    cursor: pointer
+
+svg
+  max-width: 100%
+  max-height: 100%
+
+.toggle-text
+  align-items: center
+  display: flex
+  cursor: pointer
+
+.toggle-text__arrow
+  border-left: 5px solid transparent
+  border-right: 5px solid transparent
+  border-top: 5px solid
+  color: $dodger-blue
+  display: inline-block
+  height: 0
+  margin: 0 0 0 5px
+  transition: transform 400ms
+  vertical-align: middle
+  width: 0
+  &--active
+    transform: rotate(180deg)
+
+.sort__arrow
+  color: $dark-grey
+  opacity: 0
+  transition: transform 400ms, opacity 200ms
+  @extend .toggle-text__arrow
+  &--asc
+    transform: rotate(180deg)
+  &--active
+    opacity: 1
+
+.list-no-style
+  list-style: none
+  margin: 0
+  padding: 0
+
+.no-data-placeholder
+  color: $cool-grey
+  font-size: $text-xl
+  text-align: center
+  padding: 30px 0
+
+.only-mobile
+  @media (min-width: 1261px)
+    display: none !important
+
+.only-desktop
+  @media (max-width: 1260px)
+    display: none !important
+
+.text
+  &-cta
+    color: #309FFF
+  &-danger
+    color: #F3423C
+
+.link-header
+  margin-left: 15px
+  color: #1e9efb
+  cursor: pointer
+  font-size: 14px
+  &:hover
+    color: #82c9fd
+  &_disabled
+    pointer-events: none
+    color: #989d9f
+
+.template-create__criteria-autocomplete
+  width: calc(100% - 36px)
+  max-height: 400px
+  margin-left: 36px
+  position: absolute
+
+  .mat-option
+    height: 32px
+    will-change: background-color
+    transition: background-color .2s ease-in-out
+
+  .mat-option.mat-active,
+  .mat-option:hover:not(.mat-option-disabled),
+  .mat-option:focus:not(.mat-option-disabled)
+    background-color: rgb(224, 227, 229)

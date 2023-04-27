@@ -1,0 +1,38 @@
+<div class="spinning-preloader-container" *ngIf="loading"><div class="spinning-preloader-elements"></div></div>
+
+<div class="wrapper_header container container-padding">
+  <div class="flex flex-options">
+    <div class="flex__col">
+      <span *ngIf="this.selectUsers?.length">
+        <span class="people__selected">{{ this.selectUsers?.length }} {{ 'selected' | translate }}:</span>
+        <span class="mobile_group">
+          <span class="link link_send" (click)="sendEmailAllUsers()" (touchend)="sendEmailAllUsers()" translate>
+            sendEmail
+          </span>
+          <span class="link link_send" (click)="showSendScenarioDialog()" translate> scenarioPage.sendScenario </span>
+          <span class="link link_red link_trash" (click)="removeAllUsers()" (touchend)="removeAllUsers()" translate>
+            delete
+          </span>
+        </span>
+      </span>
+      <span *ngIf="!this.selectUsers?.length" class="title" translate>everyone</span>
+    </div>
+    <div class="flex__col flex__col-end flex-options__links">
+      <span class="link-header" routerLink="../add" translate>addPerson</span>
+      <span class="link-header">
+        <label class="fileContainer" [class.fileContainer--disabled]="importStatus">
+          {{ 'importCsv' | translate }} <input type="file" (change)="fileOnChange($event)" accept=".csv" />
+        </label>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper_content container container-padding container-white">
+  <mpw-people-table
+    [users]="people"
+    (deleteUser)="deletePerson($event)"
+    (sendEmail)="sendOneEmail($event)"
+    (selectedChange)="onSelectionChange($event)"
+  ></mpw-people-table>
+</div>

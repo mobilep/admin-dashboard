@@ -1,0 +1,45 @@
+.avatar
+  width: 50px
+  height: 50px
+  display: flex
+  overflow: hidden
+  border-radius: 50%
+  align-items: center
+  justify-content: center
+  content: attr(data-parent)
+  background: linear-gradient(to right, lighten(#309FFF, 15%), #309FFF)
+  &[data-color="58c9ef"]
+    background: linear-gradient(to right, lighten(#58c9ef, 15%), #58c9ef)
+  &[data-color="2be39c"]
+    background: linear-gradient(to right, lighten(#2be39c, 15%), #2be39c)
+  &[data-color="a457ec"]
+    background: linear-gradient(to right, lighten(#a457ec, 15%), #a457ec)
+  &[data-color="ffbe42"]
+    background: linear-gradient(to right, lighten(#ffbe42, 15%), #ffbe42)
+  &[data-color="e9d340"]
+    background: linear-gradient(to right, lighten(#e9d340, 15%), #e9d340)
+  &[data-color="3cd861"]
+    background: linear-gradient(to right, lighten(#3cd861, 15%), #3cd861)
+  &[data-color="f946e9"]
+    background: linear-gradient(to right, lighten(#f946e9, 15%), #f946e9)
+  &[data-color="00cdbb"]
+    background: linear-gradient(to right, lighten(#00cdbb, 15%), #00cdbb)
+  &[data-color="fd524f"]
+    background: linear-gradient(to right, lighten(#fd524f, 15%), #fd524f)
+  &[data-color="6c6ced"]
+    background: linear-gradient(to right, lighten(#6c6ced, 15%), #6c6ced)
+  &__img
+    width: 100%
+    display: block
+    min-width: 100%
+    min-height: 100%
+  &__initials
+    color: #FFFFFF
+    font-size: 17px
+    font-weight: 600
+    user-select: none
+    -ms-user-select: none
+    letter-spacing: 0.15px
+    -moz-user-select: none
+    -webkit-user-select: none
+    text-transform: uppercase

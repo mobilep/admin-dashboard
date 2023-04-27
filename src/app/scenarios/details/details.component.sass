@@ -1,0 +1,77 @@
+@import 'theme/primary'
+
+\:host
+  display: block
+  overflow: hidden
+
+.not-people
+  padding: 70px 0 0 0
+
+.not-found
+  font-size: 20px
+  padding: 40px 10px
+  color: #93989a
+  text-align: center
+
+.flex
+  padding: 15px 0 0
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+.wrapper_content
+  padding-top: 10px
+  padding-bottom: 100px
+
+.details__scenario-name
+  color: #202222
+  font-size: 18px
+  line-height: 1.3
+  font-weight: 700
+  margin-right: 20px
+
+.details__title-row
+  display: flex
+  align-items: center
+  justify-content: space-between
+  margin-bottom: 10px
+
+.details__toggle
+  flex-shrink: 0
+
+.details__metrics
+  margin-bottom: 10px
+
+.links-text-wrapper
+  display: flex
+  justify-content: space-between
+
+.links-text-input
+  flex-basis: 70%
+
+.links-text-btn
+  flex-basis: 25%
+
+.progress
+  position: relative
+
+  &__bar
+    height: 2px
+    border-radius: 1px
+    background-color: $red
+    opacity: .28
+
+  &__value
+    position: absolute
+    left: 0
+    top: 17px
+    height: 2px
+    border-radius: 1px
+    background-color: $red
+
+  &__number
+    font-size: 12px
+    line-height: 17px
+    color: rgb(147, 152, 154)
+    font-weight: 400
+    text-align: right

@@ -1,0 +1,55 @@
+<div class="scenario">
+  <div class="scenario__item scenario-top">
+    <div class="scenario-top__side scenario-top__side_left" *ngIf="scenario?.video?.thumb && scenario?.video?.playList">
+      <figure class="scenario__video-figure">
+        <img src="{{scenario.video?.thumb}}" alt="{{scenario.name}}" class="scenario__video-img" />
+        <mpw-icon class="scenario__video-icon" name="play" (click)="openVideo(scenario.video)"></mpw-icon>
+      </figure>
+    </div>
+    <div class="scenario__top-side scenario-top__side_right">
+      <div class="scenario__info">{{ scenario.info }}</div>
+    </div>
+  </div>
+  <div class="scenario__item">
+    <div class="list__sides">
+      <div class="list__sides-item" *ngIf="scenario?.steps.length">
+        <div class="scenario__heading" translate>steps</div>
+        <div class="list__list">
+          <div *ngFor="let step of scenario?.steps; let i = index" class="list__item">
+            <div class="list__number">{{ i + 1 }}</div>
+            <div class="list__text">{{ step }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="list__sides-item" *ngIf="scenario?.criterias.length">
+        <div class="scenario__heading" translate>evaluationCriteria</div>
+        <div class="list__list">
+          <div *ngFor="let criteria of scenario?.criterias; let i = index" class="list__item">
+            <div class="list__number"><mpw-icon name="check"></mpw-icon></div>
+            <div class="list__text">{{ criteria }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scenario__item" *ngIf="scenario?.bestPractices.length">
+    <div class="scenario__heading" translate>bestPractice</div>
+    <div class="scenario-best__wrapper">
+      <div *ngFor="let bestPractice of scenario?.bestPractices; let i = index" class="scenario-best">
+        <figure
+          class="scenario-best__video-figure scenario-best__side scenario-best__side_left"
+          *ngIf="bestPractice?.video"
+        >
+          <img src="{{bestPractice?.video?.thumb}}" alt="{{bestPractice?.name}}" class="scenario-best__video-img" />
+          <mpw-icon class="scenario-best__video-icon" name="play" (click)="openVideo(bestPractice.video)"></mpw-icon>
+        </figure>
+        <div class="scenario-best__details scenario-best__side scenario-best__side_right">
+          <div class="scenario-best__name" *ngIf="bestPractice?.name">{{ bestPractice?.name }}</div>
+          <div class="scenario-best__duration" *ngIf="bestPractice?.video?.duration">
+            {{ round(bestPractice?.video?.duration) }}s
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

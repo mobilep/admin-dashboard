@@ -1,0 +1,24 @@
+<vg-player>
+  <vg-controls>
+    <vg-play-pause></vg-play-pause>
+
+    <vg-scrub-bar>
+      <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+      <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+    </vg-scrub-bar>
+
+    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+
+    <vg-mute></vg-mute>
+
+    <vg-fullscreen></vg-fullscreen>
+  </vg-controls>
+  <video
+    class="player__video"
+    #media
+    [vgMedia]="media"
+    [poster]="video?.thumb"
+    [vgHls]="video?.playList"
+    type="video/mp4"
+  ></video>
+</vg-player>

@@ -1,0 +1,318 @@
+@import 'theme/primary'
+@import 'state/typografy'
+
+$input-height: 24px
+$icon-size: $input-height
+
+$video-tile-cancel-button-size: 30px
+$video-tile-icon-button-size: 54px
+$video-tile-height: 158px
+$video-tile-width: 250px
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background
+  background-color: #3FA1FF !important
+
+::ng-deep .mat-checkbox-inner-container
+  margin-right: 12px
+
+::ng-deep .mat-form-field-underline
+  display: none
+
+::ng-deep .template-create .template-create__video-tile-wrapper .input-error
+  bottom: 0
+  left: -30px
+  top: unset
+  right: unset
+
+@keyframes Spinner-rotate
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+
+button
+  cursor: pointer
+  border: none
+  background-color: transparent
+
+  &:focus
+    outline: none
+
+.template-create
+  &__action:disabled
+    cursor: not-allowed
+
+  &__header
+    font-size: $text-sm
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+
+  &__section
+    display: flex
+    padding: 27px 0
+
+    &_column
+      flex-direction: column
+
+    & + &
+      border-top: 1px solid $borderColor
+
+  &__section-header
+    font-size: $text-xs
+    color: $secondaryText
+    display: flex
+    justify-content: space-between
+    margin-bottom: 14px
+
+  &__main-info
+    flex-grow: 1
+    position: relative
+    width: calc(100% - 431px)
+    display: flex
+    flex-direction: column
+
+  &__video-tile-wrapper
+    position: relative
+
+  &__video-tile
+    overflow: hidden
+    position: relative
+    width: $video-tile-width
+    height: $video-tile-height
+    margin-left: 30px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    border-radius: 10px
+    background: linear-gradient(293deg, rgb(243, 66, 60), rgb(250, 81, 60))
+    background-size: cover
+    background-position: center center
+    color: $white
+
+    &_play
+      margin-left: 0
+      width: 62px
+      height: 74px
+      margin-right: 10px
+      position: relative
+      flex-shrink: 0
+      border-radius: 4px
+
+  &__video-tile-spinner
+    animation: Spinner-rotate .75s linear infinite
+    width: 40px
+    height: 40px
+
+  &__video-tile-play-icon
+    height: 20px
+    width: 20px
+
+  &__input-wrapper
+    position: relative
+    width: 100%
+    border-top: none
+
+  &__label
+    display: flex
+    height: 24px
+    position: relative
+    padding: 0
+
+  &__input
+    padding: 0
+    color: $primaryText
+    width: 100%
+    line-height: 33px
+    border: none
+    text-overflow: ellipsis
+    background-color: transparent
+    border-radius: 10px
+    transition: border-color .2s linear
+    font-size: $text-sm
+
+    &::placeholder
+      color: $secondaryText
+
+    &_with-icon
+      padding: 0 0 0 36px
+
+    &_name
+      height: 30px
+      font-weight: 600
+      font-size: $text-xl
+
+    &_criteria,
+    &_step
+      height: $input-height
+
+      &::placeholder
+        color: $red
+
+  &__input-example
+    color: $secondaryText
+    font-size: $text-sm
+    padding-left: 36px
+
+  &__list
+    padding: 0
+    margin: 0
+    overflow-y: auto
+    max-height: 500px
+
+  &__list-item
+    display: flex
+    align-items: flex-start
+    min-height: 20px
+    position: relative
+    font-size: $text-sm
+    padding: 0 36px
+    margin-bottom: 6px
+    list-style-type: none
+
+  &__list-item-icon
+    font-size: 10px
+    font-weight: 600
+    border-radius: 50%
+    border: 1px solid currentColor
+    display: flex
+    height: 20px
+    justify-content: center
+    align-items: center
+    position: absolute
+    transform: scale(.9999)
+    user-select: none
+    width: 20px
+    left: 3px
+
+  &__list-item-check-icon
+    width: 18px
+    height: 18px
+
+  &__list-item-remove-btn,
+  &__add-step-btn
+    background: transparent
+    border: none
+    cursor: pointer
+    display: flex
+    align-items: center
+    justify-content: center
+    padding: 0
+    position: absolute
+
+    &:focus
+      outline: none
+
+  &__add-step-btn
+    top: calc(50% - 24px/2)
+
+  &__list-item-remove-btn
+    top: 0
+    right: 0
+
+  &__add-step-icon,
+  &__trash-icon,
+  &__list-item-remove-icon
+    height: $icon-size
+    width: $icon-size
+
+  &__trash-icon
+    margin-right: 10px
+
+  &__calendar-label,
+  &__calendar-icon,
+  &__add-step-icon
+    color: $red
+
+  &__calendar-icon
+    font-size: 20px
+
+  &__add-video-icon
+    width: calc(#{$video-tile-icon-button-size} + 10px)
+    height: calc(#{$video-tile-icon-button-size} + 10px)
+
+    & > g
+      fill: rgba(255, 255, 255, .32)
+
+  &__add-video-text
+    padding-top: 14px
+    font-size: 14px
+    line-height: 19px
+
+  &__list-item-remove-icon
+    padding: 0 3px 6px
+
+  &__calendar-input
+    display: none
+
+  &__calendar-label
+    padding-left: calc(36px - 24px)
+    cursor: pointer
+
+  &__add-best-practice
+    padding: 0 0 0 36px
+    color: $red
+    height: $icon-size
+    margin-right: 25px
+    font-size: $text-sm
+
+  &__delete-best-practice
+    display: flex
+    align-items: center
+    padding: 0
+    font-size: $text-sm
+
+  &__best-practice-switcher
+    width: 200px
+    display: flex
+    align-items: center
+    justify-content: center
+
+  &__best-practice-btn
+    color: $red
+    width: 30px
+    height: 30px
+    padding: 0
+    background-color: transparent
+    border: none
+
+    &:hover
+      background-color: transparent
+      color: $dark-red
+
+    &_left
+      transform: rotate(-90deg)
+
+    &_right
+      transform: rotate(90deg)
+
+  &__best-practice-range
+    font-size: 12px
+    color: rgb(147, 152, 154)
+
+  &__best-practice-controls
+    display: flex
+    padding: 20px 0
+
+  &__best-practice
+    margin-bottom: 20px
+
+  &__best-practice-wrapper
+    display: flex
+    padding: 10px
+    width: 200px
+    height: 94px
+    background-image: linear-gradient(to right, #77cfec, #3ec0f4)
+    border-radius: 4px
+
+  &__best-practice-meta
+    color: #fff
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    font-size: 14px
+
+  &__best-practice-duration
+    color: rgba(255, 255, 255, .7)
+

@@ -1,0 +1,4 @@
+<div class="toggle-text" (click)="toggle.emit()">
+  {{ isExpanded ? expandedText : collapsedText }}
+  <span class="toggle-text__arrow" [class.toggle-text__arrow--active]="isExpanded"></span>
+</div>

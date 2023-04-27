@@ -1,0 +1,14 @@
+@import 'theme/_primary'
+@import 'state/_typografy'
+
+.scenarios-filters
+  display: grid
+  grid-template-rows: 1fr 1fr
+  grid-gap: var(--filtersGap)
+  grid-template-columns: repeat(6, 1fr)
+
+.scenarios-filters__form-field
+  &:first-child
+    grid-column: 1 / 4
+  &:nth-child(2)
+    grid-column: 4 / 7

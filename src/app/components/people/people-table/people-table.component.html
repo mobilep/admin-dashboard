@@ -1,0 +1,81 @@
+<ng-container *ngIf="(users | peopleFilter: filters | sort: sorting:SORTING_FIELD_MAPPER) as filteredUsers">
+  <ng-template #checkAllCell>
+    <div class="checkbox-group">
+      <input
+        name="select-all-users"
+        id="isAllSelected"
+        type="checkbox"
+        [(ngModel)]="isAllSelected"
+        (change)="selectAllChange(filteredUsers)"
+      />
+      <label for="isAllSelected"></label>
+    </div>
+  </ng-template>
+
+  <mpw-data-table
+    [columns]="columns"
+    [hasData]="filteredUsers.length"
+    [sorting]="sorting"
+    (sortColumn)="handleSortColumn($event)"
+  >
+    <mpw-list-filters data-slot="table-filters">
+      <mpw-people-filters (filtersChange)="handleFilterChange($event)"></mpw-people-filters>
+    </mpw-list-filters>
+
+    <!-- Counter -->
+    <div class="scenarios__counter" data-slot="table-counter">
+      {{ filteredUsers.length }}
+      {{ filteredUsers.length | i18nPlural: { '=1': 'person', other: 'people' } | translate }}
+    </div>
+
+    <!-- Pagination -->
+    <mpw-pagination
+      *ngIf="filteredUsers.length"
+      data-slot="table-pagination"
+      [itemsPerPage]="itemsPerPage"
+      (pageChange)="currentPage = $event"
+      (itemsPerPageChange)="handleItemsPerPageChange($event)"
+    ></mpw-pagination>
+
+    <!-- No data placeholder -->
+    <div class="no-data-placeholder" data-slot="table-empty-placeholder" translate>peoplePage.peopleNotFound</div>
+
+    <!-- Table body -->
+    <tr
+      *ngFor="let user of (filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage })"
+      data-slot="table-body"
+    >
+      <td>
+        <div class="checkbox-group person__checkbox">
+          <input
+            type="checkbox"
+            id="{{ user._id }}"
+            class="people__header-checkbox"
+            [(ngModel)]="user.isSelected"
+            (change)="emitSelection()"
+          />
+          <label for="{{ user._id }}"></label>
+        </div>
+      </td>
+      <td>
+        <mpw-user-with-avatar
+          [avaSrc]="user.avatar_sm"
+          [avaBg]="user.avatarColor"
+          [firstName]="user.firstName"
+          [lastName]="user.lastName"
+        ></mpw-user-with-avatar>
+      </td>
+      <td>{{ user.email }}</td>
+      <td>{{ (user.isInviteSent ? 'common.yes' : 'common.no') | translate }}</td>
+      <td>{{ user.createdAt | date: 'd/M/yy h:mm a' }}</td>
+      <td>
+        <mpw-icon class="people-table__options-cell pointer" name="more-vert" [matMenuTriggerFor]="menu"></mpw-icon>
+        <mat-menu #menu="matMenu">
+          <button class="text-cta" mat-menu-item [routerLink]="['../edit', user._id]" translate>viewEditDetails</button>
+          <button class="text-cta" mat-menu-item (click)="sendEmail.emit(user._id)" translate>sendEmail</button>
+          <button class="text-danger" mat-menu-item (click)="deleteUser.emit(user._id)" translate>delete</button>
+        </mat-menu>
+      </td>
+    </tr>
+  </mpw-data-table>
+</ng-container>

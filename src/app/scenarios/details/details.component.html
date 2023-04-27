@@ -1,0 +1,73 @@
+<div class="spinning-preloader-container" *ngIf="loaded"><div class="spinning-preloader-elements"></div></div>
+
+<div class="wrapper_header container container-padding"><h1 class="page-title" translate>viewScenario</h1></div>
+
+<div class="container container-padding container-white container-border-top">
+  <div class="details__title-row">
+    <div class="details__scenario-name">{{ scenario?.name }}</div>
+    <mpw-section-toggle
+      class="details__toggle"
+      [expandedText]="'scenarioDetails.hideDetails' | translate"
+      [collapsedText]="'scenarioDetails.showDetails' | translate"
+      [isExpanded]="opened"
+      (toggle)="toggleOpen()"
+    ></mpw-section-toggle>
+  </div>
+
+  <mpw-scenario-metrics
+    *ngIf="scenarioMetrics"
+    class="details__metrics"
+    [metrics]="scenarioMetrics"
+  ></mpw-scenario-metrics>
+
+  <mpw-scenario-info *ngIf="scenario && opened" [scenario]="scenario"></mpw-scenario-info>
+</div>
+
+<ng-template [ngIf]="isAdmin$ | async" [ngIfElse]="forNonAdmin">
+  <div class="wrapper_header container container-padding">
+    <ng-template [ngIf]="!selectedLearnerIds.length && !downloadAll" [ngIfElse]="copyLinksText">
+      <h1 *ngIf="!selectedLearnerIds.length" class="page-title" translate>common.learners</h1>
+    </ng-template>
+
+    <ng-template #copyLinksText>
+      <div class="flex__col btn_margin-bottom">
+        <span class="people__selected">{{ selectedLearnerIds?.length }} {{ 'selected' | translate }}:</span>
+        <span class="mobile_group">
+          <span
+            class="link link_send"
+            [ngClass]="{ link_disabled: loadingVideos }"
+            (click)="downloadVideo()"
+            (touchend)="downloadVideo()"
+            translate
+          >
+            scenarioDetails.downloadVideos
+          </span>
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template [ngIf]="loadingVideos">
+      <div class="progress">
+        <div class="progress__number">{{ downloadStatus }} {{ progress }} %</div>
+        <div class="progress__bar"></div>
+        <div class="progress__value" [style.width]="progress + '%'"></div>
+      </div>
+    </ng-template>
+  </div>
+
+  <mpw-scenario-learners-admin
+    [practices]="practices"
+    [selectedLearnerIds]="selectedLearnerIds"
+    [downloadAll]="downloadAll"
+    (downloadAllChanged)="onDownloadAllChanged($event)"
+    (selectedLearnerIdsChanged)="onSelectedLearnerIdsChanged($event)"
+  ></mpw-scenario-learners-admin>
+</ng-template>
+
+<ng-template #forNonAdmin>
+  <div class="wrapper_header container container-padding">
+    <h1 *ngIf="!selectedLearnerIds.length" class="page-title" translate>common.learners</h1>
+  </div>
+
+  <mpw-scenario-learners [practices]="practices"></mpw-scenario-learners>
+</ng-template>

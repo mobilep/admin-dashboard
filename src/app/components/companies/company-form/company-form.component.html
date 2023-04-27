@@ -1,0 +1,58 @@
+<div class="wrapper_header container container-padding">
+  <div class="flex">
+    <div class="flex__col text-left">
+      <div *ngIf="!companyId" tabindex="1" translate>newCompany</div>
+      <div *ngIf="companyId" tabindex="1" translate>editCompanyDetails</div>
+    </div>
+    <div class="flex__col text-right"></div>
+  </div>
+</div>
+
+<div class="wrapper_content container container-padding container-white">
+  <form novalidate (ngSubmit)="onSubmit(companyForm)" [formGroup]="companyForm">
+    <div class="row">
+      <div class="col col-12 col-sm-6">
+        <div class="input-group">
+          <label for="name" translate>companyName</label>
+          <input type="text" tabindex="2" id="name" name="name" minlength="1" maxlength="255" formControlName="name" />
+        </div>
+        <div class="input-group">
+          <label for="info" translate>notes</label>
+          <div class="relative">
+            <textarea id="info" name="info" tabindex="3" maxlength="4096" formControlName="info"></textarea>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="sendReminder" translate>remindCoach</label>
+          <input type="number" id="sendReminder" formControlName="sendReminder" />
+        </div>
+
+        <div class="input-group checkbox-group input-group-mini-padding">
+          <input type="checkbox" id="emailNotifications" formControlName="isMailNotification" />
+          <label for="emailNotifications" translate>emailNotifications</label>
+        </div>
+      </div>
+    </div>
+
+    <p *ngIf="validationError" class="text-red error bounceIn animated">{{ validationError }}</p>
+
+    <div class="text-red error bounceIn animated" *ngIf="isReminderValidationVisible()" translate>
+      reminderDaysInvalid
+    </div>
+
+    <div class="text-red error bounceIn animated" *ngIf="
+        (companyForm.get('name').hasError('required') || companyForm.get('name').hasError('pattern')) &&
+        companyForm.get('name').touched
+      " translate>
+      companyNameIsInvalid
+    </div>
+
+    <br />
+    <input type="submit" tabindex="4" class="btn btn_margin-right" value="{{ 'createCompany' | translate }}"
+      *ngIf="!companyId" [disabled]="companyForm.invalid" />
+    <input type="submit" tabindex="4" class="btn btn_margin-right" value="{{ 'updateCompany' | translate }}"
+      *ngIf="companyId" [disabled]="companyForm.invalid" />
+    <button class="btn btn_cancel" (click)="goBack(companyId)" translate>cancel</button>
+  </form>
+</div>

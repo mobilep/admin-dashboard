@@ -1,0 +1,41 @@
+@import 'layout/_variables'
+
+$block-gap: 14px
+
+.metrics
+  padding-top: 15px
+
+.metrics__header-row
+  display: flex
+  justify-content: space-between
+  margin-top: 15px
+
+.metrics__page-title
+  margin-top: 0
+
+.metrics__global-section
+  display: grid
+  grid-gap: $block-gap
+  grid-template-columns: repeat(4, 1fr)
+  margin-bottom: $block-gap
+
+  @include xl-max()
+    grid-template-columns: repeat(2, 1fr)
+
+.metrics__charts-section
+  display: grid
+  grid-template-columns: 1fr 1fr
+  grid-gap: $block-gap
+  margin-bottom: $block-gap
+
+  @include xl-max()
+    grid-template-columns: 1fr
+
+.metrics__score-section-title
+  font-weight: bold
+  margin-bottom: 6px
+
+.metrics__score-section-grid
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  grid-gap: $block-gap

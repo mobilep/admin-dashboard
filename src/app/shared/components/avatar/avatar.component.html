@@ -1,0 +1,9 @@
+<div
+  class="avatarc"
+  [ngStyle]="{
+    'background-image': imgSrc && 'url(' + imgSrc + ')',
+    background: !imgSrc && '#' + bg
+  }"
+>
+  <span *ngIf="!imgSrc">{{ firstName[0] + lastName[0] }}</span>
+</div>

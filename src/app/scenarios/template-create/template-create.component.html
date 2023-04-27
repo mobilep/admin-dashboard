@@ -1,0 +1,506 @@
+<form
+  class="template-create"
+  [formGroup]="templateForm"
+  (submit)="onFormSubmit()"
+  (keydown.enter)="$event.preventDefault()"
+>
+  <div class="template-create__header wrapper_header container container-padding">
+    <div class="template-create__breadcrumbs">
+      <span class="text-cta pointer" routerLink="{{template ? '../../' : '../'}}" translate>
+        scenarioPage.templates
+      </span>
+      <span>{{ (template ? 'templates.slashViewEditDetails' : 'templates.slashCreateNewTemplate') | translate }}</span>
+    </div>
+
+    <div class="template-create__actions">
+      <button
+        class="template-create__action text-cta pointer"
+        routerLink="{{template ? '../../' : '../'}}"
+        type="button"
+        translate
+      >
+        cancel
+      </button>
+      <button class="template-create__action text-cta pointer" translate type="submit" [disabled]="videoProcessing">
+        save
+      </button>
+    </div>
+  </div>
+
+  <div class="template-create__form wrapper_content container container-padding container-white">
+    <div class="template-create__section">
+      <div class="template-create__main-info">
+        <div class="template-create__input-wrapper">
+          <label class="template-create__label">
+            <input
+              autocomplete="off"
+              type="text"
+              name="name"
+              [maxLength]="MAX_LENGTH"
+              class="template-create__input template-create__input_name"
+              formControlName="name"
+              placeholder="{{'templates.namePlaceholder' | translate}}"
+            />
+          </label>
+
+          <mpw-input-error
+            class="template-create__input-error text-red"
+            *ngIf="formSubmitted && templateForm.get('name').hasError('required')"
+            errorText="errors.fieldRequired"
+          ></mpw-input-error>
+        </div>
+        <div class="template-create__input-wrapper">
+          <label class="template-create__label">
+            <input
+              autocomplete="off"
+              type="text"
+              name="info"
+              [maxLength]="MAX_LENGTH"
+              class="template-create__input template-create__input_info"
+              formControlName="info"
+              placeholder="{{'templates.descriptionPlaceholder' | translate}}"
+            />
+          </label>
+
+          <mpw-input-error
+            class="template-create__input-error text-red"
+            *ngIf="formSubmitted && templateForm.hasError(formErrors.infoRequired)"
+            errorText="errors.fieldRequired"
+          ></mpw-input-error>
+        </div>
+      </div>
+
+      <button
+        class="template-create__video-tile"
+        *ngIf="video?.state === videoStates.PROCESSING || (video && !video?.thumb && (video?.duration || video?.size))"
+        type="button"
+      >
+        <svg
+          class="template-create__video-tile-spinner"
+          version="1.1"
+          viewBox="0 0 50 50"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <path
+            fill="#fff"
+            d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
+          ></path>
+        </svg>
+      </button>
+
+      <div class="template-create__video-tile-wrapper">
+        <button
+          *ngIf="
+            video?.state !== videoStates.PROCESSING && (!video || video?.thumb || (!video?.duration && !video?.size))
+          "
+          class="template-create__video-tile"
+          type="button"
+          (click)="openAddVideoDialog()"
+          [style.background-image]="video?.thumb && 'url(' + video?.thumb + ')'"
+        >
+          <svg
+            class="template-create__add-video-icon"
+            version="1.1"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            *ngIf="!templateForm.get('videoId')?.value"
+          >
+            <g fill="none" fill-rule="evenodd" transform="translate(3 3)">
+              <circle cx="9.5" cy="9.5" r="9" stroke="currentColor"></circle>
+              <g fill="currentColor">
+                <path d="M9 6h1v7H9z"></path>
+                <path d="M13 9v1H6V9z"></path>
+              </g>
+            </g>
+          </svg>
+          <span class="template-create__add-video-text">{{
+            (video ? 'templates.change' : 'templates.addVideo') | translate
+          }}</span>
+        </button>
+        <mpw-input-error
+          class="template-create__input-error text-red"
+          *ngIf="formSubmitted && templateForm.hasError(formErrors.videoRequired)"
+          errorText="errors.videoRequired"
+        ></mpw-input-error>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="template-create__section template-create__section_column">
+      <div class="template-create__section-header" translate>templates.steps</div>
+      <div class="template-create__input-wrapper">
+        <ul class="template-create__list" *ngIf="templateForm.get('steps').value?.length">
+          <li class="template-create__list-item" *ngFor="let step of templateForm.get('steps').value; index as i">
+            <span class="template-create__list-item-icon">{{ i + 1 }}</span> <span>{{ step }}</span>
+            <button class="template-create__list-item-remove-btn" (click)="removeStep(i)" type="button">
+              <svg
+                class="template-create__list-item-remove-icon"
+                version="1.1"
+                viewBox="0 0 12 15"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <g fill="none" fill-rule="evenodd">
+                  <path
+                    fill="currentColor"
+                    d="M11.25 1.914V2.5h-.781L9.53 13.867c0 .313-.11.58-.332.801a1.091 1.091 0 0 1-.8.332H2.89c-.313 0-.58-.11-.801-.332a1.091 1.091 0 0 1-.332-.8L.82 2.5H0v-.586h3.125v-.781c0-.313.11-.58.332-.801.221-.221.488-.332.8-.332h2.735c.313 0 .58.11.801.332.221.221.332.488.332.8v.782h3.125zm-7.54-.781v.781h3.83v-.781c0-.365-.183-.547-.548-.547H4.258c-.365 0-.547.182-.547.547zm5.274 12.695L9.883 2.5H1.406l.899 11.328v.04c0 .364.195.546.586.546h5.507c.391 0 .586-.182.586-.547v-.039zm-3.632-.664V3.75h.546v9.414h-.546zM8.125 3.75l-.43 9.414h-.547L7.54 3.75h.586zm-4.453 0l.43 9.414h-.547l-.43-9.414h.547z"
+                  ></path>
+                  <path d="M-6-5h24v24H-6z"></path>
+                </g>
+              </svg>
+            </button>
+          </li>
+        </ul>
+
+        <div class="template-create__label">
+          <button class="template-create__add-step-btn" (click)="addStep(stepNameValue)" type="button">
+            <svg
+              class="template-create__add-step-icon"
+              version="1.1"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g fill="none" fill-rule="evenodd" transform="translate(3 3)">
+                <circle cx="9.5" cy="9.5" r="9" stroke="currentColor"></circle>
+                <g fill="currentColor">
+                  <path d="M9 6h1v7H9z"></path>
+                  <path d="M13 9v1H6V9z"></path>
+                </g>
+              </g>
+            </svg>
+          </button>
+
+          <input
+            type="text"
+            name="step"
+            autocomplete="off"
+            class="template-create__input template-create__input_step template-create__input_with-icon"
+            formControlName="step"
+            [maxLength]="MAX_LENGTH"
+            (keyup.enter)="addStep(stepNameValue)"
+            placeholder="{{'templates.addSteps' | translate}}"
+          />
+        </div>
+
+        <mpw-input-error
+          class="template-create__input-error text-red"
+          *ngIf="formSubmitted && templateForm.hasError(formErrors.stepsRequired)"
+          errorText="errors.fieldRequired"
+        ></mpw-input-error>
+
+        <div class="template-create__input-example" *ngIf="!templateForm.get('steps').value?.length" translate>
+          templates.stepExample
+        </div>
+      </div>
+    </div>
+
+    <!-- BEST PRACTICE a.k.a examples -->
+    <div class="template-create__section template-create__section_column">
+      <div class="template-create__section-header" translate>templates.bestPractice</div>
+      <div class="template-create__input-wrapper">
+        <div class="template-create__best-practice">
+          <div class="template-create__best-practice-wrapper" *ngIf="selectedExample">
+            <button
+              class="template-create__video-tile template-create__video-tile_play"
+              type="button"
+              *ngIf="selectedExample?.video?.state === videoStates.PROCESSING || !selectedExample?.video?.playList"
+            >
+              <svg
+                class="template-create__video-tile-spinner"
+                version="1.1"
+                viewBox="0 0 50 50"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <path
+                  fill="#fff"
+                  d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
+                ></path>
+              </svg>
+            </button>
+            <button
+              *ngIf="selectedExample?.video?.state !== videoStates.PROCESSING && selectedExample?.video?.playList"
+              class="template-create__video-tile template-create__video-tile_play"
+              type="button"
+              (click)="openPlayerDialog()"
+              [style.background-image]="selectedExample?.video?.thumb && 'url(' + selectedExample?.video?.thumb + ')'"
+            >
+              <svg
+                class="template-create__video-tile-play-icon"
+                version="1.1"
+                viewBox="0 0 54 54"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-width="2" transform="translate(2 2)">
+                  <circle cx="25" cy="25" r="25" fill="#FFF" fill-opacity=".32"></circle>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M31.831 22.58c1.546.988 1.537 2.854-.008 3.841l-9.602 6.138C20.625 33.579 19 32.688 19 30.79V18.205c0-1.894 1.626-2.788 3.222-1.768l9.61 6.143z"
+                  ></path>
+                </g>
+              </svg>
+            </button>
+            <div class="template-create__best-practice-meta">
+              <div>{{ selectedExample?.name }}</div>
+              <div class="template-create__best-practice-duration">{{ selectedExampleDuration }}</div>
+            </div>
+          </div>
+
+          <div class="template-create__best-practice-switcher" *ngIf="examples.length > 1">
+            <button
+              class="template-create__best-practice-btn template-create__best-practice-btn_left"
+              (click)="handleLeftClick()"
+              type="button"
+            >
+              <svg
+                version="1.1"
+                viewBox="0 0 30 30"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <path
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M11 16l4-3 4 3"
+                ></path>
+              </svg>
+            </button>
+            <div class="template-create__best-practice-range">
+              {{ currentExampleId + 1 }} {{ 'templates.bestPracticeCountSeparator' | translate }} {{ examples.length }}
+            </div>
+            <button
+              class="template-create__best-practice-btn template-create__best-practice-btn_right"
+              (click)="handleRightClick()"
+              type="button"
+            >
+              <svg
+                version="1.1"
+                viewBox="0 0 30 30"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <path
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M11 16l4-3 4 3"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="template-create__label">
+          <button class="template-create__add-step-btn" type="button" (click)="openAddBestPracticeDialog()">
+            <svg
+              class="template-create__add-step-icon"
+              version="1.1"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g fill="none" fill-rule="evenodd" transform="translate(3 3)">
+                <circle cx="9.5" cy="9.5" r="9" stroke="currentColor"></circle>
+                <g fill="currentColor">
+                  <path d="M9 6h1v7H9z"></path>
+                  <path d="M13 9v1H6V9z"></path>
+                </g>
+              </g>
+            </svg>
+          </button>
+
+          <button type="button" class="template-create__add-best-practice" (click)="openAddBestPracticeDialog()">
+            {{ (selectedExample ? 'templates.addBestPractice' : 'templates.addBestPracticeExample') | translate }}
+          </button>
+
+          <button
+            type="button"
+            class="template-create__delete-best-practice"
+            (click)="deleteExample(selectedExample)"
+            *ngIf="selectedExample"
+          >
+            <svg
+              class="template-create__trash-icon"
+              version="1.1"
+              viewBox="0 0 12 15"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g fill="none" fill-rule="evenodd">
+                <path
+                  fill="currentColor"
+                  d="M11.25 1.914V2.5h-.781L9.53 13.867c0 .313-.11.58-.332.801a1.091 1.091 0 0 1-.8.332H2.89c-.313 0-.58-.11-.801-.332a1.091 1.091 0 0 1-.332-.8L.82 2.5H0v-.586h3.125v-.781c0-.313.11-.58.332-.801.221-.221.488-.332.8-.332h2.735c.313 0 .58.11.801.332.221.221.332.488.332.8v.782h3.125zm-7.54-.781v.781h3.83v-.781c0-.365-.183-.547-.548-.547H4.258c-.365 0-.547.182-.547.547zm5.274 12.695L9.883 2.5H1.406l.899 11.328v.04c0 .364.195.546.586.546h5.507c.391 0 .586-.182.586-.547v-.039zm-3.632-.664V3.75h.546v9.414h-.546zM8.125 3.75l-.43 9.414h-.547L7.54 3.75h.586zm-4.453 0l.43 9.414h-.547l-.43-9.414h.547z"
+                ></path>
+                <path d="M-6-5h24v24H-6z"></path>
+              </g>
+            </svg>
+            {{ 'templates.deleteBestPractice' | translate }}
+          </button>
+        </div>
+
+        <div class="template-create__input-example" *ngIf="!templateForm.get('examples').value?.length" translate>
+          templates.bestPracticeExample
+        </div>
+      </div>
+    </div>
+
+    <!-- CRITERIA -->
+    <div class="template-create__section template-create__section_column">
+      <div class="template-create__section-header" translate>templates.evaluationCriteria</div>
+      <div class="template-create__input-wrapper">
+        <ul class="template-create__list" *ngIf="criteriaIds?.length">
+          <li class="template-create__list-item" *ngFor="let criteriaId of criteriaIds; index as i">
+            <span class="template-create__list-item-icon">
+              <svg
+                class="template-create__list-item-check-icon"
+                version="1.1"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <path
+                  d="M15.2851562,9.21777344 C15.4088548,9.0940749 15.551106,9.03222656 15.7119141,9.03222656 C15.8727222,9.03222656 16.0149733,9.0940749 16.1386719,9.21777344 C16.2500006,9.32910212 16.3056641,9.46826088 16.3056641,9.63525391 C16.3056641,9.80224693 16.2500006,9.94140569 16.1386719,10.0527344 L10.2197266,16.0087891 L10.1455078,16.0830078 C10.0341791,16.2067063 9.89502037,16.2685547 9.72802734,16.2685547 C9.56103432,16.2685547 9.42187556,16.2067063 9.31054688,16.0830078 L6.36035156,13.1513672 C6.24902288,13.0400385 6.19335938,12.9008797 6.19335938,12.7338867 C6.19335938,12.5668937 6.24902288,12.4277349 6.36035156,12.3164062 C6.4840501,12.1927077 6.62630128,12.1308594 6.78710938,12.1308594 C6.94791747,12.1308594 7.09016865,12.1927077 7.21386719,12.3164062 L9.71875,14.8212891 L15.2851562,9.21777344 Z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
+            <span>{{ getCriteriaById(criteriaId)?.name }}</span>
+            <button class="template-create__list-item-remove-btn" (click)="removeCriteria(criteriaId)" type="button">
+              <svg
+                class="template-create__list-item-remove-icon"
+                version="1.1"
+                viewBox="0 0 12 15"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                <g fill="none" fill-rule="evenodd">
+                  <path
+                    fill="currentColor"
+                    d="M11.25 1.914V2.5h-.781L9.53 13.867c0 .313-.11.58-.332.801a1.091 1.091 0 0 1-.8.332H2.89c-.313 0-.58-.11-.801-.332a1.091 1.091 0 0 1-.332-.8L.82 2.5H0v-.586h3.125v-.781c0-.313.11-.58.332-.801.221-.221.488-.332.8-.332h2.735c.313 0 .58.11.801.332.221.221.332.488.332.8v.782h3.125zm-7.54-.781v.781h3.83v-.781c0-.365-.183-.547-.548-.547H4.258c-.365 0-.547.182-.547.547zm5.274 12.695L9.883 2.5H1.406l.899 11.328v.04c0 .364.195.546.586.546h5.507c.391 0 .586-.182.586-.547v-.039zm-3.632-.664V3.75h.546v9.414h-.546zM8.125 3.75l-.43 9.414h-.547L7.54 3.75h.586zm-4.453 0l.43 9.414h-.547l-.43-9.414h.547z"
+                  ></path>
+                  <path d="M-6-5h24v24H-6z"></path>
+                </g>
+              </svg>
+            </button>
+          </li>
+        </ul>
+
+        <div class="template-create__label">
+          <button
+            class="template-create__add-step-btn"
+            (click)="handleAddCriteriaBtnClick($event, trigger)"
+            type="button"
+          >
+            <svg
+              class="template-create__add-step-icon"
+              version="1.1"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g fill="none" fill-rule="evenodd" transform="translate(3 3)">
+                <circle cx="9.5" cy="9.5" r="9" stroke="currentColor"></circle>
+                <g fill="currentColor">
+                  <path d="M9 6h1v7H9z"></path>
+                  <path d="M13 9v1H6V9z"></path>
+                </g>
+              </g>
+            </svg>
+          </button>
+
+          <input
+            #trigger="matAutocompleteTrigger"
+            matInput
+            type="text"
+            name="criteria"
+            autocomplete="off"
+            class="template-create__input template-create__input_criteria template-create__input_with-icon"
+            formControlName="criteria"
+            [maxLength]="MAX_LENGTH"
+            placeholder="{{'templates.addEvaluationCriteria' | translate}}"
+            [matAutocomplete]="criteriaAutocomplete"
+            (click)="trigger.openPanel()"
+          />
+
+          <mat-autocomplete
+            #criteriaAutocomplete="matAutocomplete"
+            class="template-create__criteria-autocomplete"
+            [autoActiveFirstOption]="true"
+            (optionSelected)="templateForm.get('criteria').patchValue('')"
+          >
+            <mat-option
+              *ngFor="let criteria of filteredCriterias"
+              [value]="criteria.name"
+              (onSelectionChange)="addCriteria(criteria)"
+            >
+              {{ criteria.name }}
+            </mat-option>
+
+            <ng-template [ngIf]="templateForm.get('criteria').value?.trim()">
+              <ng-template [ngIf]="criteriaAlreadyAdded && !filteredCriterias.length">
+                <mat-option disabled>{{ 'templates.criteriaIsAlreadyAdded' | translate }}</mat-option>
+              </ng-template>
+
+              <ng-template [ngIf]="!criteriaExists">
+                <mat-option
+                  (onSelectionChange)="addCriteria({ name: templateForm.get('criteria').value })"
+                  [value]="templateForm.get('criteria').value"
+                >
+                  {{ templateForm.get('criteria').value?.trim() + ' ' + ('templates.addCriteria' | translate) }}
+                </mat-option>
+              </ng-template>
+            </ng-template>
+          </mat-autocomplete>
+        </div>
+
+        <mpw-input-error
+          class="template-create__input-error text-red"
+          *ngIf="formSubmitted && templateForm.hasError(formErrors.criteriasRequired)"
+          errorText="errors.fieldRequired"
+        ></mpw-input-error>
+
+        <div class="template-create__input-example" *ngIf="!criteriaIds?.length" translate>
+          templates.evaluationCriteriaExample
+        </div>
+      </div>
+    </div>
+
+    <!-- DUE DATE -->
+    <div class="template-create__section template-create__section_column">
+      <div class="template-create__section-header" translate>templates.dueDate</div>
+      <mat-form-field class="template-create__input-wrapper">
+        <mat-datepicker-toggle matPrefix [for]="picker">
+          <mat-icon class="template-create__calendar-icon" matDatepickerToggleIcon>calendar_today</mat-icon>
+        </mat-datepicker-toggle>
+        <input
+          id="calendar-input"
+          class="template-create__calendar-input"
+          matInput
+          [min]="MIN_DATE"
+          [matDatepicker]="picker"
+          formControlName="dueDate"
+        />
+        <label for="calendar-input" class="template-create__calendar-label" (click)="picker.open()">
+          {{ templateForm.get('dueDate').value | daysDistance }}
+        </label>
+        <mat-datepicker #picker [startAt]="startAtDate"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-checkbox class="example-margin" formControlName="canEditVideo" color="primary">
+      {{ 'templates.allowTheCoachToChange' | translate }}
+    </mat-checkbox>
+  </div>
+</form>

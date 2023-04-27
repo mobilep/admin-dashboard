@@ -1,0 +1,19 @@
+<div class="dialog-close" (click)="closeDialog()" (touchend)="closeDialog()">x</div>
+
+<div class="form-title">
+  {{ 'delete' | translate }} {{ people?.length }}
+  <span class="text-lowercase">
+    {{ people?.length | i18nPlural: { '=1': 'person', 'other': 'people' } | translate }}?
+  </span>
+</div>
+
+<div class="text-red error">{{validationError}}</div>
+
+<div class="row">
+  <div class="col-6">
+    <div class="btn" (click)="onDelete()" (touchend)="onDelete()" translate>delete</div>
+  </div>
+  <div class="col-6">
+    <div class="btn btn_cancel" (click)="closeDialog()" (touchend)="closeDialog()" translate>cancel</div>
+  </div>
+</div>

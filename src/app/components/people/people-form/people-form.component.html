@@ -1,0 +1,229 @@
+<div class="spinning-preloader-container" *ngIf="!hasLoaded"><div class="spinning-preloader-elements"></div></div>
+
+<div class="wrapper_header container container-padding">
+  <div class="flex">
+    <div class="flex__col text-left">
+      <span class="title" *ngIf="!uid" translate>addNewPerson</span>
+      <span class="title" *ngIf="uid">
+        {{ 'edit' | translate }} {{ person.get('firstName').value }}’s {{ 'details' | translate | lowercase }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper_content container container-padding container-white">
+  <form novalidate (ngSubmit)="onSubmit(person)" [formGroup]="person">
+    <div class="row">
+      <div class="col-6 col-sm-3">
+        <div class="input-group">
+          <label>
+            <span>{{ 'firstName' | translate }}*</span>
+          </label>
+          <input type="text" formControlName="firstName" maxlength="30" />
+          <div class="error" *ngIf="person.get('firstName').hasError('required') && person.get('firstName').touched">
+            {{ 'firstName' | translate }} {{ 'isRequired' | translate }}
+          </div>
+          <div
+            class="error"
+            *ngIf="person.get('firstName').hasError('maxlength') && person.get('firstName').touched"
+            translate
+          >
+            isMustMoreCharacters
+          </div>
+          <div class="error" *ngIf="person.get('firstName').hasError('pattern') && person.get('firstName').touched">
+            {{ 'isPattern' | translate }}: _ - . ` '
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-3">
+        <div class="input-group">
+          <label>
+            <span>{{ 'lastName' | translate }}* </span>
+          </label>
+          <input type="text" formControlName="lastName" maxlength="30" />
+          <div class="error" *ngIf="person.get('lastName').hasError('required') && person.get('lastName').touched">
+            {{ 'lastName' | translate }} {{ 'isRequired' | translate }}
+          </div>
+          <div
+            class="error"
+            *ngIf="person.get('lastName').hasError('maxlength') && person.get('lastName').touched"
+            translate
+          >
+            isMustMoreCharacters
+          </div>
+          <div class="error" *ngIf="person.get('lastName').hasError('pattern') && person.get('lastName').touched">
+            {{ 'isPattern' | translate }}: _ - . ` '
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6">
+        <div class="input-group">
+          <label>{{ 'email' | translate }}*</label> <input type="email" formControlName="email" />
+          <div
+            class="error"
+            *ngIf="
+              person.get('email').hasError('email') &&
+              person.get('email').touched &&
+              person.get('email').hasError('pattern') === false
+            "
+          >
+            {{ 'email' | translate }} {{ 'isRequired' | translate }}
+          </div>
+          <div class="error" *ngIf="person.get('email').hasError('pattern') && person.get('email').touched">
+            {{ 'email' | translate }} {{ 'isInvalid' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 col-sm-3">
+        <div class="input-group">
+          <label>{{ 'country' | translate }}*</label>
+          <div class="select-wrapper">
+            <select name="country" formControlName="country">
+              <option value="" translate>selectCountry</option>
+              <option *ngFor="let item of countries" value="{{ item?.id }}">{{ item?.id | translate }}</option>
+            </select>
+          </div>
+          <div class="error" *ngIf="person.get('country').hasError('required') && person.get('country').touched">
+            {{ 'country' | translate }} {{ 'isRequired' | translate }}
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-3">
+        <div class="input-group">
+          <label>{{ 'postcode' | translate }}</label> <input type="text" formControlName="postcode" maxlength="30" />
+          <div
+            class="error"
+            *ngIf="person.get('postcode').hasError('maxlength') && person.get('postcode').touched"
+            translate
+          >
+            isMustMoreCharacters
+          </div>
+          <div class="error" *ngIf="person.get('postcode').hasError('pattern') && person.get('postcode').touched">
+            {{ 'isPattern' | translate }}: - .
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6">
+        <div class="input-group">
+          <label>{{ 'language' | translate }}*</label>
+          <div class="select-wrapper">
+            <select name="lang" formControlName="lang">
+              <option *ngFor="let lang of languages" value="{{ lang?.id }}">{{ lang?.name }}</option>
+            </select>
+          </div>
+          <div class="error" *ngIf="person.get('lang').hasError('required') && person.get('lang').touched">
+            {{ 'language' | translate }} {{ 'isRequired' | translate }}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6">
+        <div class="input-group">
+          <label for="coach-email">{{ 'peoplePage.coachEmail' | translate }}</label>
+          <input id="coach-email" type="email" formControlName="_coach" />
+          <div class="error" *ngIf="person.get('_coach').hasError('email') && person.get('_coach').touched">
+            {{ 'email' | translate }} {{ 'isInvalid' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="isSysAdmin || isCompanyAdmin">
+      <div class="col-12 col-sm-6 manager-criteria-block">
+        <label>
+          <span>{{ 'Manager criteria' }}</span>
+        </label>
+        <input
+          type="text"
+          formControlName="managerCriteria"
+          maxlength="130"
+          placeholder="e.g:  country:FR,Region:Paris|Lyon"
+        />
+        <p *ngIf="person.get('managerCriteria').valid">
+          <span>
+            {{ scenarioCount }}
+            {{ scenarioCount | i18nPlural: { '=1': 'scenarios_found_one', other: 'scenarios_found' } | translate }}
+          </span>
+        </p>
+        <div
+          class="error"
+          *ngIf="person.get('managerCriteria').hasError('pattern') && person.get('managerCriteria').touched"
+          translate
+        >
+          invalidManagerCriteria
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 col-sm-6">
+        <div class="checkbox-group input-group">
+          <input
+            id="isCompanyAdmin"
+            name="isCompanyAdmin"
+            class="people__header-checkbox"
+            formControlName="isCompanyAdmin"
+            type="checkbox"
+            (change)="onChangeIsCompanyAdmin($event)"
+          />
+          <label for="isCompanyAdmin" translate>isCompanyAdmin</label>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6" *ngIf="person.get('isCompanyAdmin').value">
+        <div class="input-group">
+          <label>{{ 'adminPassword' | translate }}*</label>
+          <div class="relative">
+            <div class="hide" (click)="onPasswordType()">{{ labelPassword }}</div>
+            <input
+              [type]="passwordType"
+              formControlName="password"
+              name="password"
+              maxlength="64"
+              autocomplete="new-password"
+            />
+          </div>
+          <div class="error" *ngIf="person.get('password').invalid && person.get('password').touched" translate>
+            passwordPattern
+          </div>
+        </div>
+      </div>
+    </div>
+    <div formArrayName="extraInformation" class="extra-information">
+      <div class="extra-information__title"><span translate>extraInformation</span></div>
+      <div *ngFor="let row of person.get('extraInformation').value; let i = index; trackBy: trackByFn">
+        <div class="row">
+          <div class="col-12"><div class="extra-information__title"></div></div>
+        </div>
+        <div class="row" [formGroupName]="i">
+          <div class="col-12 col-sm-6">
+            <label>
+              <span *ngIf="row.title === 'Business Unit'" translate>business_unit</span>
+              <span *ngIf="row.title === 'Region'" translate>region</span>
+              <span *ngIf="row.title === 'Country Region'" translate>country_region</span>
+              <span *ngIf="row.title === 'Global Region'" translate>global_region</span>
+              <span *ngIf="row.title === 'Custom 1'">{{ 'custom' | translate }} 1</span>
+              <span *ngIf="row.title === 'Custom 2'">{{ 'custom' | translate }} 2</span>
+              <span *ngIf="row.title === 'Custom 3'">{{ 'custom' | translate }} 3</span>
+            </label>
+            <input type="text" formControlName="description" maxlength="30" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="text-red error">{{ validationError }}</div>
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="input-group">
+          <button *ngIf="!uid" type="submit" class="btn btn_margin-right" [disabled]="person.invalid" translate>
+            addPerson
+          </button>
+          <button *ngIf="uid" type="submit" class="btn btn_margin-right" [disabled]="person.invalid" translate>
+            saveChange
+          </button>
+          <button class="btn btn_cancel" (click)="goBack()" translate>cancel</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

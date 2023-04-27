@@ -1,0 +1,88 @@
+.box
+  &__wrapper
+    position: relative
+  &__flex-end
+    display: flex
+    justify-content: flex-end
+  &__header
+    min-height: 60px
+    justify-content: space-between
+    display: flex
+    align-items: center
+    font-size: 14px
+    color: #93989A
+    border-bottom: 1px solid #CCD0D2
+    &_title
+      padding-right: 70px
+  &__side
+    position: static
+  &__list
+    position: relative
+  &__item
+    border-bottom: 1px solid #CCD0D2
+  &__coll
+    font-size: 14px
+    color: #93989A
+    white-space: nowrap
+    text-overflow: ellipsis
+    overflow: hidden
+    &_search
+      line-height: 0
+      flex: 300px 0 1
+    &_status
+      flex: 100px 0 0
+      display: none
+    &_waiting
+      flex: 100px 0 0
+      display: none
+    &_learner
+      flex: 50px 0 0
+      display: none
+      text-align: center
+    &_scenario
+      flex: 50px 0 0
+      display: none
+      text-align: center
+    &_created
+      flex: 150px 0 0
+      display: none
+      text-align: left
+    &_invited
+      text-align: left
+      display: none
+  @media (min-width: 568px)
+    &__coll
+      &_status
+        display: block
+      &_waiting
+        display: block
+      &_created
+        display: block
+      &_invited
+        display: block
+        flex: 60px 0 0
+  @media (min-width: 768px)
+    &__coll
+      &_learner
+        display: block
+        padding-right: 5px
+      &_scenario
+        display: block
+        padding-right: 5px
+      &_invited
+        flex: 100px 0 0
+        padding-right: 5px
+  @media (min-width: 1024px)
+    &__header
+      &_title
+        padding-right: 100px
+        &_wide
+          padding-right: 10px
+  @media (min-width: 1260px)
+    &__coll
+      &_learner
+        flex: 70px 0 0
+        padding: 0
+      &_scenario
+        flex: 70px 0 0
+        padding: 0

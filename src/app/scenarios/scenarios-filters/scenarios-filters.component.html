@@ -1,0 +1,58 @@
+<form [formGroup]="filtersForm" class="scenarios-filters">
+  <!-- Scenario name -->
+  <div class="scenarios-filters__form-field">
+    <input
+      type="text"
+      name="scenario"
+      matInput
+      [placeholder]="'common.scenario' | translate | titlecase"
+      formControlName="scenario"
+      [matAutocomplete]="scenarioAutocomplete"
+    />
+
+    <mat-autocomplete #scenarioAutocomplete="matAutocomplete">
+      <mat-option *ngFor="let scenario of (scenarioAutoCompleteItems$ | async)" [value]="scenario.name">
+        {{ scenario.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+
+  <!-- Coach name -->
+  <div class="scenarios-filters__form-field select-wrapper">
+    <select formControlName="coach">
+      <option value="" translate>scenarioPage.coach</option>
+      <option *ngFor="let coach of coaches" [value]="coach.name">{{ coach.name }}</option>
+    </select>
+  </div>
+
+  <!-- Learners -->
+  <div class="scenarios-filters__form-field" [attr.data-balloon]="mathFieldTip">
+    <input type="text" [placeholder]="'common.learners' | translate" formControlName="learners" />
+  </div>
+
+  <div class="scenarios-filters__form-field" [attr.data-balloon]="mathFieldTip">
+    <input type="text" [placeholder]="'scenarioPage.connections' | translate" formControlName="connections" />
+  </div>
+
+  <div class="scenarios-filters__form-field" [attr.data-balloon]="mathFieldTip">
+    <input type="text" [placeholder]="'scenarioPage.waitingOnLearner' | translate" formControlName="waitingOnLearner" />
+  </div>
+
+  <div class="scenarios-filters__form-field" [attr.data-balloon]="mathFieldTip">
+    <input type="text" [placeholder]="'scenarioPage.waitingOnCoach' | translate" formControlName="waitingOnCoach" />
+  </div>
+
+  <div class="scenarios-filters__form-field" [attr.data-balloon]="mathFieldTip">
+    <input type="text" [placeholder]="'scenarioPage.evaluated' | translate" formControlName="evaluated" />
+  </div>
+
+  <!-- Status -->
+  <div class="scenarios-filters__form-field select-wrapper">
+    <select name="status" formControlName="status">
+      <option value="" translate>scenarioPage.scenarioStatus</option>
+      <option *ngFor="let status of STATUS_OPTIONS" [value]="status">{{
+        'scenarioStatus.' + status | translate
+      }}</option>
+    </select>
+  </div>
+</form>

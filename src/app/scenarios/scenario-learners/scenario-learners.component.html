@@ -1,0 +1,78 @@
+<div
+  *ngIf="(practices | learnersFilter: filters | sort: sorting:SORTING_FIELD_MAPPER) as filteredPractices"
+  class="scenario-learners wrapper_content container container-padding container-white"
+>
+  <mpw-data-table
+    [columns]="columns"
+    [hasData]="filteredPractices.length"
+    [sorting]="sorting"
+    (sortColumn)="handleSortColumn($event)"
+  >
+    <mpw-list-filters data-slot="table-filters">
+      <mpw-learners-filters (filtersChange)="handleFilterChange($event)"></mpw-learners-filters>
+    </mpw-list-filters>
+
+    <!-- Pagination -->
+    <mpw-pagination
+      *ngIf="filteredPractices.length"
+      data-slot="table-pagination"
+      [itemsPerPage]="itemsPerPage"
+      (pageChange)="currentPage = $event"
+      (itemsPerPageChange)="handleItemsPerPageChange($event)"
+    ></mpw-pagination>
+
+    <!-- Counter -->
+    <div data-slot="table-counter">
+      {{ filteredPractices.length }} {{ filteredPractices.length | i18nPlural: learnersPluralParams | translate }}
+    </div>
+
+    <!-- No data placeholder -->
+    <div class="no-data-placeholder" data-slot="table-empty-placeholder" translate>
+      scenarioDetails.learnersNotFound
+    </div>
+
+    <!-- Table body -->
+    <tr
+      *ngFor="let practice of (filteredPractices | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage })"
+      class="pointer"
+      data-slot="table-body"
+      routerLink="chat/{{practice._id}}"
+    >
+      <td>
+        <mpw-user-with-avatar
+          [avaSrc]="practice.user.avatarSm"
+          [avaBg]="practice.user.avatarColor"
+          [firstName]="practice.user.firstName"
+          [lastName]="practice.user.lastName"
+        ></mpw-user-with-avatar>
+      </td>
+      <td>{{ 'practiceStatus.' + practice.status | translate }}</td>
+      <td>{{ (practice.connection ? 'common.yes' : 'common.no') | translate }}</td>
+      <td>{{ 'waitingOn.' + practice.waitingOn | translate }}</td>
+      <td>
+        <div class="scenario-learners__score-wrapper">
+          {{ practice.userAvgMark || '-' }}
+
+          <mpw-stars-rating
+            *ngIf="practice.userAvgMark"
+            class="scenario-learners__score-stars only-desktop"
+            [value]="practice.userAvgMark"
+            size="sm"
+          ></mpw-stars-rating>
+        </div>
+      </td>
+      <td>
+        <div class="scenario-learners__score-wrapper">
+          {{ practice.coachAvgMark || '-' }}
+
+          <mpw-stars-rating
+            *ngIf="practice.coachAvgMark"
+            class="scenario-learners__score-stars only-desktop"
+            [value]="practice.coachAvgMark"
+            size="sm"
+          ></mpw-stars-rating>
+        </div>
+      </td>
+    </tr>
+  </mpw-data-table>
+</div>

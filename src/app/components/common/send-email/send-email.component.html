@@ -1,0 +1,36 @@
+<div *ngIf="currentUser">
+  <div class="dialog-close" (click)="closeDialog()" (touchend)="closeDialog()">x</div>
+
+  <div class="form-title" tabindex="1">
+    {{ 'sendEmailTo' | translate }} {{ usersSelected?.length }}
+    <span class="text-lowercase">
+      {{ usersSelected?.length | i18nPlural: {'=1': 'person', 'other': 'people'} | translate}}
+    </span>
+  </div>
+
+  <div class="text-red error">{{validationError}}</div>
+
+  <div class="text-green error">{{validationDone}}</div>
+
+  <form novalidate #sendTest="ngForm" autocomplete="off">
+    <div class="input-group input-group_btn">
+      <label for="email" translate>sendTestEmailTo</label>
+      <div class="relative">
+        <input type="email" ngModel id="email" name="email" required autocomplete="off"
+          pattern="^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$">
+        <input type="submit" class="btn" value="{{ 'send' | translate }}" (click)="sendTestMail(sendTest)"
+          (touchend)="sendTestMail(sendTest)" [disabled]="sendTest.invalid">
+      </div>
+    </div>
+  </form>
+
+  <div class="btn btn_inline btn_margin-right" (click)="onSendEmail()" (touchend)="onSendEmail()">
+    {{ 'email' | translate }} {{ usersSelected?.length }}
+    <span class="text-lowercase">
+      {{ usersSelected?.length | i18nPlural: {'=1': 'person', 'other': 'people'} | translate}}
+    </span>
+  </div>
+
+  <div class="btn btn_cancel btn_center btn_inline" *ngIf="!inProgress" (click)="closeDialog()"
+    (touchend)="closeDialog()" translate>cancel</div>
+</div>

@@ -1,0 +1,86 @@
+<div class="spinning-preloader-container" *ngIf="(loading$ | async)">
+  <div class="spinning-preloader-elements"></div>
+</div>
+
+<section class="wrapper_content container container-padding">
+  <div class="metrics__header-row">
+    <h1 class="page-title metrics__page-title" translate>metrics.pageTitle</h1>
+    <span *ngIf="!(isManager$ | async)" class="link-header" (click)="exportCsvFile()" translate>exportCsv</span>
+  </div>
+
+  <div class="metrics">
+    <p *ngIf="(dataError$ | async) as dataError" class="text-red error bounceIn animated">{{ dataError }}</p>
+
+    <!-- Global metrics block -->
+    <div class="metrics__global-section" *ngIf="(metrics$ | async) as metrics">
+      <mpw-metric-tile [value]="metrics.messages" [label]="'metrics.totalMessages' | translate" iconName="messages">
+      </mpw-metric-tile>
+      <mpw-metric-tile
+        [value]="metrics.scenariosInProgress"
+        [label]="'metrics.scenariosInProgress' | translate"
+        iconName="scenarios-in-progress"
+      >
+      </mpw-metric-tile>
+      <mpw-metric-tile
+        [value]="metrics.scenariosClosed"
+        [label]="'metrics.scenarioClosed' | translate"
+        iconName="scenario-closed"
+      >
+      </mpw-metric-tile>
+      <mpw-metric-tile [value]="metrics.learners" [label]="'common.learners' | translate" iconName="learners">
+      </mpw-metric-tile>
+      <mpw-metric-tile [value]="metrics.coaches" [label]="'metrics.coaches' | translate" iconName="coaches">
+      </mpw-metric-tile>
+      <mpw-metric-tile [value]="metrics.evaluations" [label]="'metrics.evaluations' | translate" iconName="evaluations">
+      </mpw-metric-tile>
+      <mpw-metric-tile
+        [value]="metrics.avgScore.allPeriod"
+        [label]="'metrics.averageScore' | translate"
+        iconName="average-score"
+      >
+      </mpw-metric-tile>
+      <mpw-metric-tile
+        [value]="metrics.criterias"
+        [label]="'metrics.evaluationCriteria' | translate"
+        iconName="criteria"
+      >
+      </mpw-metric-tile>
+    </div>
+
+    <!-- Pie chats -->
+    <div *ngIf="(chartsData$ | async) as chartsData" class="metrics__charts-section">
+      <mpw-chart-card
+        [title]="'metrics.learnersResponsiveness' | translate"
+        [chartData]="chartsData.scenarioResponsiveness"
+      ></mpw-chart-card>
+      <mpw-chart-card
+        [title]="'metrics.scenarioLength' | translate"
+        [chartData]="chartsData.scenarioLength"
+      ></mpw-chart-card>
+    </div>
+
+    <!-- Score tiles -->
+    <div *ngIf="(metrics$ | async) as metrics" class="metrics__score-section">
+      <div class="metrics__score-section-title" translate>metrics.averageScore</div>
+
+      <div class="metrics__score-section-grid">
+        <mpw-score-tile
+          [label]="'metrics.scorePeriods.thisWeek' | translate"
+          [value]="metrics.avgScore.thisWeek"
+        ></mpw-score-tile>
+        <mpw-score-tile
+          [label]="'metrics.scorePeriods.previousWeek' | translate"
+          [value]="metrics.avgScore.previousWeek"
+        ></mpw-score-tile>
+        <mpw-score-tile
+          [label]="'metrics.scorePeriods.thisMonth' | translate"
+          [value]="metrics.avgScore.thisMonth"
+        ></mpw-score-tile>
+        <mpw-score-tile
+          [label]="'metrics.scorePeriods.previousMonth' | translate"
+          [value]="metrics.avgScore.previousMonth"
+        ></mpw-score-tile>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+@import 'theme/primary'
+@import 'state/typografy'
+
+$border-radius: 2px
+$itemBg: $pale-blue
+$activeItemBg: linear-gradient(to right, #77cfec, $dodger-blue)
+$itemsGap: 4px
+$itemPadding: 5px 10px
+
+.pagination
+  display: flex
+  font-size: $text-xs
+
+.pagination__section
+  align-items: center
+  display: flex
+  margin-right: 30px
+  &:last-child
+    margin-right: 0
+
+.pagination__section-label
+  color: $black
+  margin-right: 10px
+
+.pagination__options-list
+  display: flex
+
+.pagination__option
+  margin-right: $itemsGap
+  background-color: $itemBg
+  border-radius: $border-radius
+  &:last-child
+    margin-right: 0
+
+.pagination__option-link
+  display: inline-block
+  padding: $itemPadding
+  color: $secondaryText
+  &--current
+    background-image: $activeItemBg
+    color: #fff
+    pointer-events: none
+
+// ngx-pagination styles
+::ng-deep ul.ngx-pagination
+  margin: 0
+  padding-left: 0
+
+::ng-deep ul.ngx-pagination li.current
+  background-image: $activeItemBg
+  border-radius: $border-radius
+  padding: $itemPadding
+
+::ng-deep ul.ngx-pagination li a
+  background-color: $itemBg
+  border-radius: $border-radius
+  color: $secondaryText
+  padding: $itemPadding
+
+::ng-deep ul.ngx-pagination li
+  margin-right: $itemsGap
+  &:last-child
+    margin-right: 0

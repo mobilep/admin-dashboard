@@ -1,0 +1,38 @@
+@import 'theme/primary'
+
+:host
+  display: inline-block
+  font-size: 0
+  --starWidth: 19px
+  --starHeight: 18px
+  --starsGap: 3px
+
+.stars-rating
+  display: inline-block
+  position: relative
+  font-size: 0
+
+  &[data-size=sm]
+    --starWidth: 15px
+    --starHeight: 14px
+    --starsGap: 2px
+
+.stars-rating__bottom
+  color: $pale-blue
+  position: relative
+  white-space: nowrap
+
+.stars-rating__top
+  left: 0
+  overflow: hidden
+  position: absolute
+  top: 0
+  white-space: nowrap
+
+.stars-rating__item
+  &:not(:last-child)
+    margin-right: var(--starsGap)
+
+::ng-deep .stars-rating__item svg
+  width: var(--starWidth)
+  height: var(--starHeight)

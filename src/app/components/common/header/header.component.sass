@@ -1,0 +1,70 @@
+@import 'state/_typografy'
+
+\:host
+  display: block
+  overflow: visible
+
+.header
+  height: 90px
+  font-size: 0
+  background: #fff
+  padding-top: 17px
+  padding-bottom: 0
+  overflow: visible
+  &__add-company
+    font-size: 16px
+    color: #309FFF
+    cursor: pointer
+    padding-top: 6px
+  &__side
+    display: inline-block
+    vertical-align: top
+    font-size: 16px
+    &_left
+      width: 70%
+      text-align: left
+      height: 100%
+      display: inline-flex
+      flex-direction: column
+      justify-content: space-between
+    &_right
+      width: 30%
+      text-align: right
+
+.header__selected-title
+  font-size: $text-lg
+
+.menu
+  font-size: 0
+  &__item
+    display: inline-block
+    vertical-align: top
+    font-size: $text-md
+    color: #93989A
+    cursor: pointer
+    position: relative
+    padding-bottom: 10px
+    &:focus
+      outline: none
+    &:not(:last-child)
+      margin-right: 20px
+    &:hover
+      color: #309FFF
+    &_active
+      color: #309FFF
+      &:before
+        content: ''
+        width: 100%
+        height: 2px
+        background: #309FFF
+        position: absolute
+        bottom: -0px
+        left: 0
+        z-index: 2
+    &:hover
+      cursor: pointer
+    &_active
+      cursor: no-drop
+
+.noSelect
+  height: 36px

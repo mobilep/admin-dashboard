@@ -1,0 +1,67 @@
+<div class="spinning-preloader-container" *ngIf="(loading$ | async)">
+  <div class="spinning-preloader-elements"></div>
+</div>
+
+<mpw-scenarios-header></mpw-scenarios-header>
+
+<section class="templates wrapper_content container container-padding container-white">
+  <p *ngIf="(dataError$ | async) as dataError" class="text-red error bounceIn animated">{{ dataError }}</p>
+
+  <div class="templates__create text-cta" routerLink="../templates/create" translate>templates.createNewTemplate</div>
+
+  <ng-container *ngIf="(templates$ | async | sort: sorting:SORTING_FIELD_MAPPER) as templates">
+    <mpw-data-table
+      [columns]="columns"
+      [hasData]="templates.length"
+      [sorting]="sorting"
+      (sortColumn)="handleSortColumn($event)"
+    >
+      <!-- Counter -->
+      <div data-slot="table-counter">
+        {{ templates.length }}
+        {{ templates.length | i18nPlural: { '=1': 'common.template', other: 'common.templates' } | translate }}
+      </div>
+
+      <!-- Pagination -->
+      <mpw-pagination
+        *ngIf="templates.length"
+        data-slot="table-pagination"
+        [itemsPerPage]="itemsPerPage"
+        (pageChange)="currentPage = $event"
+        (itemsPerPageChange)="handleItemsPerPageChange($event)"
+      ></mpw-pagination>
+
+      <!-- No data placeholder -->
+      <div class="no-data-placeholder" data-slot="table-empty-placeholder" translate>
+        scenarioPage.templatesNotFound
+      </div>
+
+      <!-- Table body -->
+      <tr
+        *ngFor="let template of (templates | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage })"
+        data-slot="table-body"
+      >
+        <td>{{ template.name }}</td>
+        <td>{{ template.createdAt | date: 'd/M/yy h:mm a' }}</td>
+        <td>
+          <mpw-icon
+            class="templates-table__options-cell pointer"
+            name="more-vert"
+            [matMenuTriggerFor]="menu"
+          ></mpw-icon>
+          <mat-menu #menu="matMenu">
+            <button class="text-cta" mat-menu-item [routerLink]="[template._id, 'edit']" translate>
+              viewEditDetails
+            </button>
+            <button class="text-cta" mat-menu-item translate (click)="openAssignCoachDialog(template._id)">
+              scenarioPage.sendScenario
+            </button>
+            <button class="text-danger" mat-menu-item (click)="showDeleteTemplateDialog(template._id)" translate>
+              delete
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+    </mpw-data-table>
+  </ng-container>
+</section>

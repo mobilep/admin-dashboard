@@ -1,0 +1,40 @@
+<section class="data-table">
+  <ng-content select="[data-slot=table-filters]"></ng-content>
+
+  <div class="date-table__controls">
+    <ng-content select="[data-slot=table-counter]"></ng-content>
+    <ng-content select="[data-slot=table-pagination]"></ng-content>
+  </div>
+
+  <ng-content
+    *ngIf="!hasData"
+    class="data-table__placeholder"
+    select="[data-slot=table-empty-placeholder]"
+  ></ng-content>
+
+  <table *ngIf="hasData" class="data-table__data">
+    <thead class="data-table__header">
+      <tr class="data-table__row">
+        <td
+          *ngFor="let column of columns"
+          [attr.data-sortable]="column.sortable"
+          [ngClass]="column.className"
+          (click)="column.sortable ? onColumnClick(column.id) : null"
+          translate
+        >
+          {{ column.text }}
+          <span
+            *ngIf="column.sortable"
+            class="sort__arrow"
+            [class.sort__arrow--active]="sorting.columnId === column.id"
+            [class.sort__arrow--asc]="sorting.asc"
+          ></span>
+          <ng-container *ngIf="column.templateRef" [ngTemplateOutlet]="column.templateRef"></ng-container>
+        </td>
+      </tr>
+    </thead>
+    <tbody class="data-table__body">
+      <ng-content select="[data-slot=table-body]"></ng-content>
+    </tbody>
+  </table>
+</section>

@@ -1,0 +1,40 @@
+.input-error
+  position: absolute
+  top: 5px
+  right: 0
+
+  &:hover
+    .input-error__text
+      display: inline
+      transform: translateY(0)
+      opacity: 1
+      z-index: 1
+
+  &__text
+    display: inline
+    position: absolute
+    top: 40px
+    right: -12px
+    transition: all .2s ease-in-out
+    transform: translateY(-10px)
+    opacity: 0
+    z-index: -1
+    width: 153px
+    padding: 10px
+    background-color: rgb(243, 66, 60)
+    color: rgb(255, 255, 255)
+    font-size: 14px
+    line-height: 20px
+    border-radius: 3px
+
+    &::after
+      content: ""
+      right: 19px
+      top: -6px
+      width: 16px
+      height: 16px
+      position: absolute
+      transform: rotate(45deg)
+      border-radius: 3px
+      background-color: rgb(243, 66, 60)
+

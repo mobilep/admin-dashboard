@@ -1,0 +1,9 @@
+<ul class="chart-legend list-no-style">
+  <li *ngFor="let range of ranges; index as i" class="chart-legend__item">
+    <span class="chart-legend__item-color" [style.background]="colors[i]"></span>
+    <span>
+      {{ range | daysRange | translate: { from: range.from, to: range.to } }} ⎜ {{ range.count }}
+      {{ range.count | i18nPlural: { '=1': 'common.scenario', other: 'common.scenarios' } | translate }}
+    </span>
+  </li>
+</ul>

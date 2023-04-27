@@ -1,0 +1,52 @@
+.btn
+  padding: 16px 22px
+  transition: background-image 0.2s
+  border-radius: 4px
+  background-image: linear-gradient(to right, #77cfed, #3dc0f4)
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1)
+  border: none
+  color: #fff
+  max-width: 100%
+  text-overflow: ellipsis
+  overflow: hidden
+  cursor: pointer
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  margin-bottom: 20px
+  &:hover:not(:disabled)
+    cursor: pointer
+    background-image: linear-gradient(to right, darken(#77cfed, 5%), darken(#3dc0f4, 5%))
+  &:active:not(:disabled)
+    background-image: linear-gradient(to right, darken(#77cfed, 10%), darken(#3dc0f4, 10%))
+    box-shadow:  inset 0 0 5px darken(#77cfed, 25%)
+  &[disabled]
+    opacity: 0.5
+    cursor: no-drop
+  &_cancel
+    background-image: linear-gradient(-90deg, #CCCCCC 0%, #DDDDDD 100%)
+  &_center
+    text-align: center
+  &_large
+    background-image: linear-gradient(-90deg, #77CFED 0%, #3DC0F4 100%)
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.10)
+    border-radius: 4px
+    height: 100px
+    font-size: 15px
+    color: #FFFFFF
+    display: flex
+    justify-content: center
+    align-items: center
+    text-align: center
+  &_margin-bottom
+    margin-bottom: 30px
+  &_disabled
+    background: #cccfd2
+    pointer-events: none
+    cursor: no-drop
+    opacity: 0.9
+  &_inline
+    display: inline-block
+  &_margin-right
+    margin-right: 20px

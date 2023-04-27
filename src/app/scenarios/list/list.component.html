@@ -1,0 +1,66 @@
+<div class="spinning-preloader-container" *ngIf="(loading$ | async)">
+  <div class="spinning-preloader-elements"></div>
+</div>
+
+<mpw-scenarios-header></mpw-scenarios-header>
+
+<section class="wrapper_content container container-padding container-white">
+  <p *ngIf="(dataError$ | async) as dataError" class="text-red error bounceIn animated">{{ dataError }}</p>
+
+  <ng-container
+    *ngIf="(scenarios$ | async | scenariosFilter: filters | sort: sorting:SORTING_FIELD_MAPPER) as scenarios"
+  >
+    <mpw-data-table
+      [columns]="columns"
+      [hasData]="scenarios.length"
+      [sorting]="sorting"
+      (sortColumn)="handleSortColumn($event)"
+    >
+      <mpw-list-filters data-slot="table-filters">
+        <mpw-scenarios-filters
+          [scenarios]="scenarios$ | async"
+          [coaches]="coaches$ | async"
+          (filtersChange)="handleFilterChange($event)"
+        ></mpw-scenarios-filters>
+      </mpw-list-filters>
+
+      <!-- Counter -->
+      <div class="scenarios__counter" data-slot="table-counter">
+        {{ scenarios.length }}
+        {{ scenarios.length | i18nPlural: { '=1': 'common.scenario', other: 'common.scenarios' } | translate }}
+      </div>
+
+      <!-- Pagination -->
+      <mpw-pagination
+        *ngIf="scenarios.length"
+        data-slot="table-pagination"
+        [itemsPerPage]="itemsPerPage"
+        (pageChange)="currentPage = $event"
+        (itemsPerPageChange)="handleItemsPerPageChange($event)"
+      ></mpw-pagination>
+
+      <!-- No data placeholder -->
+      <div class="no-data-placeholder" data-slot="table-empty-placeholder" translate>
+        scenarioPage.scenariosNotFound
+      </div>
+
+      <!-- Table body -->
+      <tr
+        *ngFor="let scenario of (scenarios | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage })"
+        class="scenarios__table-row pointer"
+        data-slot="table-body"
+        routerLink="{{ '../' + scenario._id }}"
+      >
+        <td>{{ scenario.name }}</td>
+        <td>{{ scenario.coach.name }}</td>
+        <td>{{ scenario.userTotal }}</td>
+        <td>{{ scenario.connections }}</td>
+        <td>{{ scenario.waitingOnLearner }}</td>
+        <td>{{ scenario.waitingOnCoach }}</td>
+        <td>{{ scenario.userCompleted }}</td>
+        <td>{{ scenario.createdAt | date: 'd/M/yy h:mm a' }}</td>
+        <td [attr.data-status]="scenario.status">{{ 'scenarioStatus.' + scenario.status | translate }}</td>
+      </tr>
+    </mpw-data-table>
+  </ng-container>
+</section>

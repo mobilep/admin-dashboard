@@ -1,0 +1,47 @@
+<form class="learner-filters" [formGroup]="filtersForm">
+  <!-- Status -->
+  <div class="select-wrapper">
+    <select name="status" formControlName="status">
+      <option value="" translate>common.status</option>
+      <option *ngFor="let option of STATUS_OPTIONS" [value]="option">
+        {{ 'practiceStatus.' + option | translate }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Connection -->
+  <div class="select-wrapper">
+    <select name="status" formControlName="connection">
+      <option value="" translate>scenarioDetails.connection</option>
+      <option *ngFor="let option of CONNECTION_OPTIONS" [value]="option"> {{ 'common.' + option | translate }} </option>
+    </select>
+  </div>
+
+  <!-- Waiting on -->
+  <div class="select-wrapper">
+    <select name="status" formControlName="waitingOn">
+      <option value="" translate>scenarioDetails.waitingOn</option>
+      <option *ngFor="let option of WAITING_ON_OPTIONS" [value]="option">
+        {{ 'waitingOn.' + option | translate }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Learner evaluation -->
+  <div [attr.data-balloon]="mathFieldTip">
+    <input
+      type="text"
+      [placeholder]="'scenarioDetails.learnerEvaluation' | translate"
+      formControlName="learnerEvaluation"
+    />
+  </div>
+
+  <!-- Coach evaluation -->
+  <div [attr.data-balloon]="mathFieldTip">
+    <input
+      type="text"
+      [placeholder]="'scenarioDetails.coachEvaluation' | translate"
+      formControlName="coachEvaluation"
+    />
+  </div>
+</form>

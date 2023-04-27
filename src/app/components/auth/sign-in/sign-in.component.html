@@ -1,0 +1,21 @@
+<div class="title" tabindex="1" translate>welcome</div>
+
+<div class="text-red error">{{validationError}}</div>
+
+<form novalidate #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" autocomplete="off">
+  <input type="hidden" name="webForm" ngModel>
+  <div class="input-group">
+    <label for="email" translate>email</label>
+    <input type="email" tabindex="2" ngModel id="email" name="email" required autocomplete="off"
+      pattern="^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$">
+  </div>
+  <div class="input-group">
+    <label for="password" translate>password</label>
+    <a class="input-group__right" routerLink='/auth/forgot-password' tabindex="4">{{ 'forgot' | translate }}?</a>
+    <div class="relative">
+      <div class="hide" (click)="onPasswordType()">{{ labelPassword }}</div>
+      <input [type]="passwordType" ngModel tabindex="3" id="password" name="password" required autocomplete="off">
+    </div>
+  </div>
+  <input type="submit" tabindex="5" class="btn" [value]="'logIn' | translate" [disabled]="loginForm.invalid">
+</form>

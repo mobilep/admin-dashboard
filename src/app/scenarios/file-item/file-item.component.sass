@@ -1,0 +1,80 @@
+@import 'theme/primary'
+
+button
+  cursor: pointer
+  border: none
+  background-color: transparent
+
+  &:focus
+    outline: none
+
+.file-item
+  display: flex
+  padding: 10px 0
+
+  &__size
+    font-size: 12px
+    line-height: 17px
+    font-weight: 400
+    color: rgb(147, 152, 154)
+    padding-left: 30px
+
+  &__icon
+    flex: 0 0 42px
+
+  &__main
+    flex: 0 0 calc(100% - 42px - 30px)
+    max-width: calc(100% - 42px - 30px)
+    padding: 0 20px
+
+  &__info
+    display: flex
+    align-items: center
+
+  &__name
+    font-size: 14px
+    line-height: 19px
+    color: rgb(3, 3, 3)
+    font-weight: 600
+    flex: 0 0 calc(100% - 100px)
+    text-overflow: ellipsis
+    white-space: nowrap
+    overflow: hidden
+
+  &__side
+    flex: 0 0 30px
+    display: flex
+
+  &__progress
+    position: relative
+
+  &__progress-bar
+    height: 2px
+    border-radius: 1px
+    background-color: $red
+    opacity: .28
+
+  &__progress-value
+    position: absolute
+    left: 0
+    top: 17px
+    height: 2px
+    border-radius: 1px
+    background-color: $red
+
+  &__progress-number
+    font-size: 12px
+    line-height: 17px
+    color: rgb(147, 152, 154)
+    font-weight: 400
+    text-align: right
+
+  &__file-icon
+    width: 36px
+    height: 42px
+    color: $red
+    margin-right: 20px
+
+  &__delete-icon
+    height: 31px
+    width: 31px

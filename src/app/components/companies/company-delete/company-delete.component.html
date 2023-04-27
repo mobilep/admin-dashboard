@@ -1,0 +1,17 @@
+<div class="dialog-close" (click)="closeDialog()" (touchend)="closeDialog()">x</div>
+
+<div class="form-title" translate>delete_company</div>
+
+<p>{{ 'you_want_to_remove' | translate }} {{company?.name}} {{ 'company' | translate }}?</p>
+
+<br>
+<br>
+
+<div class="row">
+  <div class="col-6">
+    <div class="btn" (click)="deleteCompany()" (touchend)="deleteCompany()" translate>delete</div>
+  </div>
+  <div class="col-6">
+    <div class="btn btn_cancel" (click)="closeDialog()" (touchend)="closeDialog()" translate>cancel</div>
+  </div>
+</div>

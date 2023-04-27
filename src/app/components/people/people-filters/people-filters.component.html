@@ -1,0 +1,31 @@
+<form class="people-filters" [formGroup]="filtersForm">
+  <!-- Name -->
+  <div><input type="text" [placeholder]="'name' | translate" formControlName="name" /></div>
+
+  <!-- Email -->
+  <div><input type="text" [placeholder]="'email' | translate" formControlName="email" /></div>
+
+  <!-- Invited -->
+  <div class="select-wrapper">
+    <select name="status" formControlName="isInviteSent">
+      <option value="" translate>invited</option>
+      <option *ngFor="let option of INVITED_OPTIONS" [value]="option"> {{ 'common.' + option | translate }} </option>
+    </select>
+  </div>
+
+  <div><input type="text" [placeholder]="'country' | translate" formControlName="country" /></div>
+
+  <div><input type="text" [placeholder]="'business_unit' | translate" formControlName="businessUnit" /></div>
+
+  <div class="select-wrapper">
+    <select name="status" formControlName="isCoach">
+      <option [value]="IS_COACH_OPTIONS.ALL" translate> peoplePage.all </option>
+      <option [value]="IS_COACH_OPTIONS.YES" translate> peoplePage.hasATeam </option>
+      <option [value]="IS_COACH_OPTIONS.NO" translate> peoplePage.hasNoTeam </option>
+    </select>
+  </div>
+
+  <div><input type="text" [placeholder]="'region' | translate" formControlName="region" /></div>
+
+  <div><input type="text" [placeholder]="'global_region' | translate" formControlName="globalRegion" /></div>
+</form>

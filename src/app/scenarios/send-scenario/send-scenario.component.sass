@@ -1,0 +1,123 @@
+@import 'theme/primary'
+@import 'state/_typografy'
+
+::ng-deep .send-scenario .send-scenario__user .avatarc
+  visibility: hidden
+  font-size: 10px
+  height: 20px
+  width: 20px
+
+::ng-deep .mat-form-field-underline
+  display: none
+
+::ng-deep .send-scenario__user .user__name
+  max-width: 130px
+
+::ng-deep .user__name
+  text-overflow: ellipsis
+  overflow: hidden
+  white-space: nowrap
+
+button
+  cursor: pointer
+  border: none
+  background-color: transparent
+
+  &:focus
+    outline: none
+
+.send-scenario
+  min-width: 400px
+
+  &__title
+    color: $red
+    font-size: $text-lg
+    font-weight: bold
+    margin-bottom: 25px
+    margin-top: 10px
+
+  &__users
+    display: flex
+    flex-wrap: wrap
+
+  &__user
+    display: flex
+    align-items: center
+    background-color: #F1F2F2
+    padding: 6px
+    border-radius: 19px
+    margin-bottom: 10px
+    margin-right: 5px
+
+  &__remove-user
+    margin-left: 15px
+    background-color: #CDD1D3
+    border-radius: 50%
+    position: relative
+    width: 20px
+    height: 20px
+    font-size: 0
+
+    &:before, &:after
+      content: ''
+      position: absolute
+      width: 14px
+      height: 3px
+      background: #F1F2F2
+      margin: auto
+      top: 0
+      left: 0
+      right: 0
+      border-radius: 28%
+      bottom: 0
+    &:before
+      transform: rotate(46deg)
+    &:after
+      transform: rotate(-46deg)
+
+  &__form-field
+    width: 100%
+
+  &__label
+    color: $cool-grey
+    font-size: $text-sm
+
+  &__input
+    padding: 0 0 0 15px
+    color: $primaryText
+    width: 100%
+    line-height: 33px
+    text-overflow: ellipsis
+    background-color: transparent
+    border-radius: 10px
+    transition: border-color .2s linear
+    border: 1px solid #CDD1D3
+
+    &:active
+      border-color: #2EA1FF
+
+  &::placeholder
+    color: $secondaryText
+
+  &__submit-btn
+    min-width: 120px
+    background-color: $red
+    border-radius: 10px
+    border-width: 1px
+    border-style: solid
+    border-color: $red
+    color: $white
+    cursor: pointer
+    font-size: $text-md
+    transition: background-color .1s ease-in-out, border-color .1s ease-in-out, opacity .1s ease-in-out
+    user-select: none
+    margin-bottom: 15px
+    padding: 8px 26px
+
+    &:hover
+      background-color: $dark-red
+      border-color: $dark-red
+
+    &:disabled
+      cursor: not-allowed
+      opacity: .7

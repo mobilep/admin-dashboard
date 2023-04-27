@@ -1,0 +1,63 @@
+<div class="dialog-close" (click)="closeDialog()" (touchend)="closeDialog()">x</div>
+
+<div class="import-result">
+  <p *ngIf="result.addedUsers.length">
+    {{result.addedUsers.length}}
+    {{result.addedUsers.length
+      | i18nPlural: { '=1': 'importAddedOne', 'other': 'importAdded' }
+      | translate
+    }}
+  </p>
+
+  <div class="import-issues-info" *ngIf="result.issues.length > 0">
+    <p>
+      {{result.issues.length}}
+      {{result.issues.length
+        | i18nPlural: { '=1': 'importWithIssuesOne', 'other': 'importWithIssues' }
+        | translate
+      }}
+    </p>
+    <mat-table #table [dataSource]="result.issues">
+      <mat-header-row *matHeaderRowDef="displayedColumnsIssues"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsIssues;"></mat-row>
+      <ng-container matColumnDef="lineNumber">
+        <mat-header-cell *matHeaderCellDef translate>line</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lineNumber}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="issues">
+        <mat-header-cell *matHeaderCellDef translate>issue</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.issues[0] | translate}}</mat-cell>
+      </ng-container>
+    </mat-table>
+  </div>
+
+  <div class="import-failed-info" *ngIf="result.failedUsers.length > 0">
+    <p>
+      {{result.failedUsers.length}}
+      {{result.failedUsers.length
+        | i18nPlural: { '=1': 'importFailedOne', 'other': 'importFailed' }
+        | translate
+      }}
+    </p>
+    <mat-table #table [dataSource]="result.failedUsers">
+      <mat-header-row *matHeaderRowDef="displayedColumnsFailed"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsFailed;"></mat-row>
+      <ng-container matColumnDef="lineNumber">
+        <mat-header-cell *matHeaderCellDef translate>line</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lineNumber}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef translate>email</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="failReason">
+        <mat-header-cell *matHeaderCellDef translate>error</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.failReason | translate}} </mat-cell>
+      </ng-container>
+    </mat-table>
+  </div>
+</div>

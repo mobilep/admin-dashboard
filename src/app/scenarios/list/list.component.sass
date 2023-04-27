@@ -1,0 +1,13 @@
+@import 'theme/primary'
+@import 'state/typografy'
+
+::ng-deep .scenarios__table-name-cell
+  width: 150px
+::ng-deep .scenarios__table-created-at-cell
+  width: 110px
+
+td[data-status="active"]
+  color: $kermit-green
+
+td[data-status="closed"]
+  color: $red

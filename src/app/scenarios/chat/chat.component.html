@@ -1,0 +1,106 @@
+<div class="spinning-preloader-container" *ngIf="loaded">
+  <div class="spinning-preloader-elements"></div>
+</div>
+<div class="wrapper_header container container-padding">
+  <div class="head">
+    <a (click)="goBack()" class="head__a">{{scenario?.name}}</a>
+    <span class="head__arrow-right"></span>
+    <span class="head__title">{{ user?.name }}</span>
+  </div>
+</div>
+<div class="container container-padding container-white container-border-top">
+  <div class="chat">
+    <div class="chat__title">{{'conversationBetween' | translate}} {{user?.name}} {{'and' | translate}}
+      {{scenario?.coach?.name}}</div>
+    <div class="chat__list">
+      <ng-template ngFor let-item [ngForOf]="chat" let-i="index">
+
+        <div class="chat__item"
+          [ngClass]="{'chat__item_right': item?._user === scenario?.coach._id, 'chat__item_same': checkSameMessage(i)}">
+
+          <div class="chat__time-box">
+            <div class="chat__time" *ngIf="(item?.time | time) === 'today'">{{ item?.time | date: 'hh:mm' }}</div>
+            <div class="chat__time" *ngIf="(item?.time | time) === 'yesterday'">{{'yesterday' | translate}}
+              {{ item?.time | date: 'hh:mm' }}</div>
+            <div class="chat__time" *ngIf="(item?.time | time) === 'more'">{{ item?.time | date: "dd/MM/yyy hh:mm" }}
+            </div>
+          </div>
+
+          <div class="chat__line">
+            <div class="chat__user">
+              <div class="avatar" [attr.data-color]="scenario?.coach?.avatarColor"
+                *ngIf="item?._user === scenario?.coach._id">
+                <img class="avatar__img" src="{{ scenario?.coach.avatarSm }}" alt="{{ scenario?.coach.name }}"
+                  *ngIf="scenario?.coach.avatarSm">
+                <span class="avatar__initials"
+                  *ngIf="!scenario?.coach.avatarSm">{{ scenario?.coach?.firstName | limit: 1 }}{{ scenario?.coach?.lastName | limit: 1 }}</span>
+              </div>
+              <div class="avatar" [attr.data-color]="user?.avatarColor" *ngIf="item?._user !== scenario?.coach._id">
+                <img class="avatar__img" src="{{ user.avatarSm }}" alt="{{ user.name }}" *ngIf="user.avatarSm">
+                <span class="avatar__initials"
+                  *ngIf="!user.avatarSm">{{ user?.firstName | limit: 1 }}{{ user?.lastName | limit: 1 }}</span>
+              </div>
+            </div>
+            <div class="chat__content chat__content_{{item?.type}}" *ngIf="item?.type === 'video'">
+              <figure class="chat__figure" *ngIf="item?.content?.thumb">
+                <img src="{{item?.content?.thumb}}" alt="video" class="chat__figure-img">
+                <svg class="chat__figure-icon" (click)="openVideo(item?.content)" width="51px" height="51px"
+                  viewBox="0 0 51 51" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g transform="translate(-381.000000, -311.000000)" stroke="#FFFFFF" stroke-width="2">
+                      <g transform="translate(382.000000, 312.000000)">
+                        <circle fill-opacity="0.319916214" fill="#FFFFFF" cx="24.5" cy="24.5" r="24.5"></circle>
+                        <path
+                          d="M30.8310635,22.579538 C32.3768008,23.5675427 32.3680583,25.4337977 30.8232298,26.4212216 L21.2209623,32.558801 C19.6247065,33.5790962 18,32.6880231 18,30.7907451 L18,18.2050073 C18,16.3109012 19.6258624,15.4173951 21.221584,16.4373487 L30.8310635,22.579538 Z"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </figure>
+            </div>
+            <div class="chat__content chat__content_{{item?.type}}" *ngIf="item?.type === 'welcome'">{{item?.content}}
+            </div>
+            <div class="chat__content chat__content_{{item?.type}}"
+              *ngIf="item?.type === 'text' || item?.type === 'system-text'">{{item?.content}}</div>
+            <div class="chat__content chat__content_{{item?.type}}" *ngIf="item?.type === 'evaluation'">
+
+              <span>{{item?.content.text}}</span>
+              <svg width="15px" height="21px" viewBox="0 0 15 21" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                  <path
+                    d="M1.71714323,0 L3.41679765,4.4408921e-16 C3.77651491,3.78010221e-16 4.10851462,0.193201295 4.28623224,0.505951922 L9.68113634,10 L6.26306847,10 C5.90335121,10 5.57135151,9.80679871 5.39363389,9.49404808 L0.847708646,1.49404808 C0.574853427,1.01387262 0.74291969,0.403420635 1.22309515,0.130565416 C1.37369093,0.0449907694 1.54393206,4.75907586e-16 1.71714323,4.4408921e-16 Z"
+                    id="path-1"></path>
+                </defs>
+                <g id="Flows" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g id="12o" transform="translate(-87.000000, -417.000000)">
+                    <g id="Group" transform="translate(87.000000, 418.000000)">
+                      <path
+                        d="M6.81279274,0 L8.45842372,0 C8.84648122,-7.1285007e-17 9.19950187,0.224505449 9.36405985,0.575944345 L9.44125067,0.740797216 L14.7767858,10 L11.358718,10 C10.9990007,10 10.667001,9.80679871 10.4892834,9.49404808 L5.94335815,1.49404808 C5.67050293,1.01387262 5.8385692,0.403420635 6.31874466,0.130565416 C6.46934044,0.0449907694 6.63958157,4.75907586e-16 6.81279274,4.4408921e-16 Z"
+                        id="Rectangle-Copy" fill-opacity="0.8" fill="#FFFFFF"
+                        transform="translate(10.294703, 5.000000) scale(-1, 1) translate(-10.294703, -5.000000) ">
+                      </path>
+                      <g id="Rectangle">
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <path stroke="#FA5260" stroke-width="0.5"
+                          d="M1.71714323,-0.25 L3.41679765,-0.25 C3.86644423,-0.25 4.28144386,-0.00849838128 4.50359088,0.382439902 L10.1107397,10.25 L6.26306847,10.25 C5.8134219,10.25 5.39842227,10.0084984 5.17627524,9.6175601 L0.63035,1.6175601 C0.289280976,1.01734077 0.499363805,0.254275794 1.09958313,-0.0867932304 C1.28782786,-0.193761538 1.50062927,-0.25 1.71714323,-0.25 Z">
+                        </path>
+                      </g>
+                      <circle id="Oval-4" fill="#FFFFFF" cx="7.5" cy="15.5" r="4.5"></circle>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+              <span>{{item?.content.avgMark}}</span>
+            </div>
+            <div class="chat__content chat__content_{{item?.type}}" *ngIf="item?.type === 'evaluate'">{{item?.content}}
+            </div>
+          </div>
+        </div>
+
+      </ng-template>
+    </div>
+  </div>
+</div>

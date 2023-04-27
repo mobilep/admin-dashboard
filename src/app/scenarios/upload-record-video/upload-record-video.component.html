@@ -1,0 +1,610 @@
+<div class="spinning-preloader-container spinning-preloader-container_absolute" *ngIf="(loading$ | async)">
+  <div class="spinning-preloader-elements"></div>
+</div>
+
+<div class="upload-record-video">
+  <!-- SELECT -->
+  <div class="upload-record-video__select" *ngIf="(currentScreen$ | async) === screens.Select">
+    <button class="upload-record-video__close-btn" (click)="close()" type="button">
+      <svg
+        class="upload-record-video__close-icon"
+        version="1.1"
+        viewBox="0 0 31 31"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          fill="none"
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path d="M21.333 21.333l-6.666-6.666L21.333 8"></path>
+          <path d="M8 21.333l6.667-6.666L8 8"></path>
+        </g>
+      </svg>
+    </button>
+
+    <svg
+      class="upload-record-video__icon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="140"
+      height="110"
+      viewBox="0 0 51 39"
+    >
+      <g fill="none" fillRule="nonzero">
+        <g fill="#F3423C">
+          <path
+            d="M47.6 0H3.4A3.394 3.394 0 0 0 0 3.387v32.18a3.394 3.394 0 0 0 3.4 3.387h44.2c1.878 0 3.4-1.517 3.4-3.388V3.387A3.394 3.394 0 0 0 47.6 0zM13.605 37.26a4.288 4.288 0 0 1 1.945-3.396l5.865-3.302a1.42 1.42 0 0 0 .593-1.598 1.427 1.427 0 0 0-1.371-1.019h-5.57a.3.3 0 0 1-.268-.153.286.286 0 0 1 0-.295c1.17-2.011 2.686-6.143 3.433-11.705 1.034-7.687 6.952-7.336 7.2-7.319a.781.781 0 0 0 .142 0c.255-.023 6.16-.423 7.2 7.318.747 5.563 2.264 9.695 3.432 11.703a.289.289 0 0 1 0 .298.3.3 0 0 1-.269.153h-5.574a1.42 1.42 0 1 0-.737 2.642l5.78 3.251a4.315 4.315 0 0 1 1.989 3.422h-23.79zM49.3 35.566c0 .936-.761 1.694-1.7 1.694h-8.513a6.008 6.008 0 0 0-2.805-4.87l-4.888-2.751h4.538a2.007 2.007 0 0 0 1.739-.994 1.99 1.99 0 0 0 .004-1.997c-1.038-1.785-2.505-5.759-3.219-11.081-1.188-8.838-8.174-8.813-8.956-8.786-.784-.031-7.768-.052-8.956 8.787a32.872 32.872 0 0 1-3.221 11.083 1.99 1.99 0 0 0 .008 1.995c.36.616 1.022.994 1.737.993h4.536l-4.93 2.776a5.99 5.99 0 0 0-2.76 4.845H3.4c-.939 0-1.7-.758-1.7-1.694V3.387c0-.935.761-1.693 1.7-1.693h44.2c.939 0 1.7.758 1.7 1.693v32.18z"
+          />
+          <path
+            d="M9.35 3.387H5.1c-.939 0-1.7.758-1.7 1.694v4.234c0 .468.38.847.85.847s.85-.38.85-.847V5.081h4.25c.47 0 .85-.38.85-.847a.848.848 0 0 0-.85-.847zM9.35 33.873H5.1v-4.234a.848.848 0 0 0-.85-.847c-.47 0-.85.379-.85.847v4.234c0 .935.761 1.693 1.7 1.693h4.25c.47 0 .85-.379.85-.846a.848.848 0 0 0-.85-.847zM46.75 28.792c-.47 0-.85.379-.85.847v4.234h-4.25c-.47 0-.85.379-.85.847 0 .467.38.846.85.846h4.25c.939 0 1.7-.758 1.7-1.693v-4.234a.848.848 0 0 0-.85-.847zM45.9 3.387h-4.25c-.47 0-.85.38-.85.847 0 .468.38.847.85.847h4.25v4.234c0 .468.38.847.85.847s.85-.38.85-.847V5.081c0-.936-.761-1.694-1.7-1.694z"
+          />
+        </g>
+        <path d="M-5-11h60v60H-5z" />
+      </g>
+    </svg>
+
+    <button
+      class="upload-record-video__record-btn"
+      translate
+      type="button"
+      (click)="currentScreen$.next(screens.Record)"
+    >
+      templates.recordVideo
+    </button>
+    <button
+      class="upload-record-video__upload-btn"
+      translate
+      type="button"
+      (click)="currentScreen$.next(screens.UploadExisting)"
+    >
+      templates.uploadExisting
+    </button>
+  </div>
+
+  <!-- RECORD -->
+  <div class="upload-record-video__recorder" *ngIf="(currentScreen$ | async) === screens.Record">
+    <button
+      class="upload-record-video__close-btn upload-record-video__close-btn_outside"
+      (click)="close()"
+      type="button"
+    >
+      <svg
+        class="upload-record-video__close-icon"
+        version="1.1"
+        viewBox="0 0 31 31"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          fill="none"
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path d="M21.333 21.333l-6.666-6.666L21.333 8"></path>
+          <path d="M8 21.333l6.667-6.666L8 8"></path>
+        </g>
+      </svg>
+    </button>
+
+    <button
+      class="upload-record-video__switch-camera-btn"
+      *ngIf="streamReady && !isRecording && (showSwitchCamera$ | async)"
+      (click)="switchCamera()"
+    >
+      <svg
+        class="upload-record-video__switch-camera-icon"
+        version="1.1"
+        viewBox="0 0 48 48"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g fill="none" fill-rule="evenodd">
+          <g fill="#FFF" fill-rule="nonzero" transform="translate(4 6)">
+            <path
+              d="M35,20.9153128 L35,6.74399787 C35,4.89147872 33.5050781,3.38510638 31.6666406,3.38510638 L28.1900781,3.38510638 C27.9711719,3.38510638 27.7563281,3.29575532 27.6008594,3.13909574 L25.2440625,0.764246809 C24.7720313,0.2886 24.1438281,0.0262148936 23.4764844,0.0262148936 L16.5233594,0.0262148936 C15.8560156,0.0262148936 15.2278125,0.2886 14.7557813,0.764246809 L12.3989844,3.13909574 C12.2435156,3.29575532 12.0286719,3.38510638 11.8097656,3.38510638 L8.33320313,3.38510638 C6.49492188,3.38510638 5,4.89147872 5,6.74399787 L5,20.9022447 C1.73851563,22.2810851 0,24.0537 0,26.0574468 C0,30.6202553 8.5328125,33.2267872 17.1973438,33.5721468 L15.2441406,35.5403106 C14.9185937,35.8683511 14.9185937,36.399734 15.2441406,36.7276957 C15.406875,36.8916766 15.6201562,36.9737064 15.8333594,36.9737064 C16.0465625,36.9737064 16.2597656,36.8916766 16.4225781,36.7276957 L19.7559375,33.3688043 C20.0814844,33.0407638 20.0814844,32.5093809 19.7559375,32.1814191 L16.4225781,28.8225277 C16.0970313,28.4944872 15.5696875,28.4944872 15.2442187,28.8225277 C14.9186719,29.1505681 14.9186719,29.6819511 15.2442187,30.0099128 L17.1108594,31.8908511 C7.91257813,31.5130574 1.66664062,28.6483128 1.66664062,26.0574468 C1.66664062,24.9037553 2.908125,23.697083 5.11085937,22.6743872 C5.47484375,24.1317149 6.77546875,25.2177043 8.33328125,25.2177043 L31.6666406,25.2177043 C33.2200781,25.2177043 34.5171875,24.1375404 34.8854688,22.6863532 C37.0699219,23.7022787 38.3333594,24.9043064 38.3333594,26.0574468 C38.3333594,28.1493638 33.9014063,30.8324936 25.7478906,31.6828638 C25.2896875,31.7312787 24.956875,32.1437106 25.0040625,32.6045574 C25.0488281,33.0367489 25.4109375,33.3581766 25.8325,33.3581766 C25.8610156,33.3581766 25.8903125,33.3565234 25.91875,33.354083 C34.453125,32.4635638 40,29.5992128 40,26.0574468 C40,24.0536213 38.2404687,22.2858872 35,20.9153128 Z M33.3333594,21.8588915 C33.3333594,22.7846787 32.5854687,23.5382979 31.6667187,23.5382979 L8.33335937,23.5382979 C7.41460937,23.5382979 6.66671875,22.7846787 6.66671875,21.8588915 L6.66671875,6.74399787 C6.66671875,5.81821064 7.41460937,5.06459149 8.33335937,5.06459149 L11.8099219,5.06459149 C12.4772656,5.06459149 13.1054688,4.80220638 13.5775,4.32655957 L15.9342969,1.95171064 C16.0897656,1.79505106 16.3046094,1.7057 16.5235156,1.7057 L23.4766406,1.7057 C23.6955469,1.7057 23.9103906,1.79505106 24.0658594,1.95171064 L26.4226562,4.32655957 C26.8946875,4.80220638 27.5228906,5.06459149 28.1902344,5.06459149 L31.6667969,5.06459149 C32.5855469,5.06459149 33.3334375,5.81821064 33.3334375,6.74399787 L33.3334375,21.8588915 L33.3333594,21.8588915 Z"
+            ></path>
+            <ellipse cx="30" cy="8.423" rx="1.667" ry="1.679"></ellipse>
+            <path
+              d="M20,6.74399787 C16.3240625,6.74399787 13.3333594,9.75760851 13.3333594,13.4617021 C13.3333594,17.1657957 16.3240625,20.1794064 20,20.1794064 C23.6759375,20.1794064 26.6666406,17.1657957 26.6666406,13.4617021 C26.6666406,9.75760851 23.6759375,6.74399787 20,6.74399787 Z M20,18.5 C17.2428125,18.5 15,16.2400085 15,13.4617021 C15,10.6833957 17.2428125,8.42340426 20,8.42340426 C22.7571875,8.42340426 25,10.6833957 25,13.4617021 C25,16.2400085 22.7571875,18.5 20,18.5 Z"
+            ></path>
+          </g>
+        </g>
+      </svg>
+    </button>
+
+    <video #video autoplay muted></video>
+
+    <div class="upload-record-video__recorder-panel">
+      <div class="upload-record-video__recorder-panel-timer">{{ currentDuration | formatSecondsWithMinutesPipe }}</div>
+
+      <button
+        class="upload-record-video__record-panel-btn"
+        (click)="toggleRecording()"
+        [ngClass]="{ 'upload-record-video__record-panel-btn_active': isRecording }"
+      ></button>
+    </div>
+  </div>
+
+  <!-- RECORD RESULT -->
+  <div
+    class="upload-record-video__record-result"
+    *ngIf="(currentScreen$ | async) === screens.RecordResult"
+    [ngStyle]="{
+      backgroundImage: 'url(' + imageFrameShot + ')',
+      height: dimensions.height + 'px',
+      width: dimensions.width + 'px'
+    }"
+  >
+    <button
+      class="upload-record-video__close-btn upload-record-video__close-btn_outside"
+      (click)="close()"
+      type="button"
+    >
+      <svg
+        class="upload-record-video__close-icon"
+        version="1.1"
+        viewBox="0 0 31 31"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          fill="none"
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path d="M21.333 21.333l-6.666-6.666L21.333 8"></path>
+          <path d="M8 21.333l6.667-6.666L8 8"></path>
+        </g>
+      </svg>
+    </button>
+
+    <div class="upload-record-video__record-result-actions">
+      <button class="upload-record-video__record-result-action" (click)="showRecordPlayer()">
+        <svg
+          class="upload-record-video__record-result-icon"
+          version="1.1"
+          viewBox="0 0 48 48"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.757 32.831C6.219 41.151 14.427 47 24 47c12.703 0 23-10.297 23-23S36.703 1 24 1C14.512 1 6.366 6.745 2.85 14.946"
+            ></path>
+            <path
+              d="M31.172 23.437c.938.577.944 1.51 0 2.091l-9.601 5.909c-.939.577-1.7.15-1.7-.949V18.476c0-1.1.755-1.529 1.7-.948l9.6 5.909z"
+            ></path>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15l5.5-2.5M3 15L1.5 9"></path>
+          </g>
+        </svg>
+        <span translate>templates.replay</span>
+      </button>
+      <button class="upload-record-video__record-result-action" (click)="recordAgain()">
+        <svg
+          class="upload-record-video__record-result-icon"
+          version="1.1"
+          viewBox="0 0 48 48"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g fill="none" stroke="currentColor" stroke-width="2" transform="translate(1 1)">
+            <circle cx="23" cy="23" r="6" fill="currentColor"></circle>
+            <circle cx="23" cy="23" r="23"></circle>
+          </g>
+        </svg>
+        <span translate>templates.recordAgain</span>
+      </button>
+      <button class="upload-record-video__record-result-action" (click)="handleSendClick()" [disabled]="!!progress">
+        <svg
+          class="upload-record-video__record-result-icon"
+          version="1.1"
+          viewBox="0 0 48 48"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g fill="none" stroke="currentColor" stroke-width="2" transform="translate(1 1)">
+            <g stroke-linecap="round"><path d="M31.228 19L20.38 28.816M14.955 23.084l5.4 5.747"></path></g>
+            <circle cx="23" cy="23" r="23"></circle>
+          </g>
+        </svg>
+        <span>{{ (data?.getDescription ? 'templates.next' : 'templates.send') | translate }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- RECORD PLAYER -->
+  <div
+    class="upload-record-video__record-player"
+    *ngIf="(currentScreen$ | async) === screens.RecordPlayer"
+    [ngStyle]="{
+      height: dimensions.height + 'px',
+      width: dimensions.width + 'px'
+    }"
+  >
+    <button
+      class="upload-record-video__close-btn upload-record-video__close-btn_outside"
+      (click)="close()"
+      type="button"
+    >
+      <svg
+        class="upload-record-video__close-icon"
+        version="1.1"
+        viewBox="0 0 31 31"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          fill="none"
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path d="M21.333 21.333l-6.666-6.666L21.333 8"></path>
+          <path d="M8 21.333l6.667-6.666L8 8"></path>
+        </g>
+      </svg>
+    </button>
+
+    <video #recordPlayerVideo controls muted class="upload-record-video__record-player-video" preload="auto"></video>
+    <div class="upload-record-video__record-player-panel">
+      <button
+        class="upload-record-video__record-player-btn"
+        (click)="currentScreen$.next(screens.RecordResult)"
+        translate
+      >
+        templates.next
+      </button>
+    </div>
+  </div>
+
+  <!-- RECORD UPLOAD -->
+  <div
+    class="upload-record-video__record-upload"
+    *ngIf="(currentScreen$ | async) === screens.RecordUploading"
+    [ngStyle]="{
+      height: dimensions.height + 'px',
+      width: dimensions.width + 'px'
+    }"
+  >
+    <button
+      class="upload-record-video__close-btn upload-record-video__close-btn_outside"
+      (click)="cancelFileSend(); close()"
+      type="button"
+    >
+      <svg
+        class="upload-record-video__close-icon"
+        version="1.1"
+        viewBox="0 0 31 31"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          fill="none"
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path d="M21.333 21.333l-6.666-6.666L21.333 8"></path>
+          <path d="M8 21.333l6.667-6.666L8 8"></path>
+        </g>
+      </svg>
+    </button>
+
+    <mpw-file-item
+      class="upload-record-video__record-file"
+      *ngIf="file"
+      (cancelled)="handleFileCancel()"
+      [file]="file"
+      [progress]="progress"
+    ></mpw-file-item>
+  </div>
+
+  <!-- RECORD ERROR -->
+  <div class="upload-record-video__record-error" *ngIf="(currentScreen$ | async) === screens.RecordError">
+    <button class="upload-record-video__close-btn" (click)="close()" type="button">
+      <svg
+        class="upload-record-video__close-icon"
+        version="1.1"
+        viewBox="0 0 31 31"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          fill="none"
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path d="M21.333 21.333l-6.666-6.666L21.333 8"></path>
+          <path d="M8 21.333l6.667-6.666L8 8"></path>
+        </g>
+      </svg>
+    </button>
+
+    <svg
+      class="upload-record-video__error-icon"
+      version="1.1"
+      viewBox="0 0 30 30"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+      <path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M15.699 17.676v-7.54a.749.749 0 1 0-1.498 0v7.54a.749.749 0 1 0 1.498 0zm.284 3.34v-.053a.983.983 0 1 0-1.965 0v.053a.983.983 0 0 0 1.965 0zM4 24L15 5l11 19H4z"
+      ></path>
+    </svg>
+
+    <h3 class="upload-record-video__record-error-title">{{ error?.titleKey | translate }}</h3>
+    <div class="upload-record-video__record-error-message">{{ error?.messageKey | translate }}</div>
+    <button
+      class="upload-record-video__error-btn upload-record-video__error-btn_auto"
+      translate
+      (click)="currentScreen$.next(screens.Record)"
+      type="button"
+    >
+      templates.retry
+    </button>
+  </div>
+
+  <!-- RECORD WITH DESCRIPTION -->
+  <div
+    class="upload-record-video__record-with-description"
+    *ngIf="(currentScreen$ | async) === screens.RecordWithDescription"
+  >
+    <button class="upload-record-video__close-btn" (click)="cancelFileSend(); close()" type="button">
+      <svg
+        class="upload-record-video__close-icon"
+        version="1.1"
+        viewBox="0 0 31 31"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          fill="none"
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path d="M21.333 21.333l-6.666-6.666L21.333 8"></path>
+          <path d="M8 21.333l6.667-6.666L8 8"></path>
+        </g>
+      </svg>
+    </button>
+
+    <mpw-file-item
+      class="upload-record-video__record-file upload-record-video__record-file_extended"
+      [file]="file"
+      [progress]="progress"
+      (cancelled)="handleFileCancel()"
+    ></mpw-file-item>
+
+    <div class="upload-record-video__file-desc">
+      <span class="upload-record-video__file-desc-note" translate>templates.bestPracticeNote</span>
+      <div class="upload-record-video__file-desc-input-wrapper">
+        <label class="upload-record-video__file-desc-input-label">
+          <input
+            autocomplete="off"
+            type="text"
+            name="bestpractice"
+            class="upload-record-video__file-desc-input"
+            [formControl]="nameControl"
+            maxlength="32"
+            placeholder="{{'templates.giveBestPracticeName' | translate}}"
+          />
+        </label>
+
+        <mpw-input-error
+          *ngIf="nameControl.invalid"
+          class="text-red"
+          errorText="templates.mustNotBeEmpty"
+        ></mpw-input-error>
+      </div>
+    </div>
+
+    <div class="upload-record-video__actions">
+      <button
+        class="upload-record-video__action upload-record-video__action_grey"
+        translate
+        type="button"
+        (click)="close()"
+      >
+        cancel
+      </button>
+      <button
+        class="upload-record-video__action"
+        type="button"
+        (click)="sendVideo()"
+        [disabled]="!file || (data?.getDescription && nameControl?.invalid) || !!progress"
+        translate
+      >
+        save
+      </button>
+    </div>
+  </div>
+
+  <!-- DRAG AND DROP -->
+  <div
+    class="upload-record-video__drag-and-drop"
+    *ngIf="(currentScreen$ | async) === screens.UploadExisting"
+    (drop)="handleDropFile($event)"
+  >
+    <button class="upload-record-video__close-btn" (click)="close()" type="button">
+      <svg
+        class="upload-record-video__close-icon"
+        version="1.1"
+        viewBox="0 0 31 31"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          fill="none"
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        >
+          <path d="M21.333 21.333l-6.666-6.666L21.333 8"></path>
+          <path d="M8 21.333l6.667-6.666L8 8"></path>
+        </g>
+      </svg>
+    </button>
+
+    <div class="upload-record-video__drag-and-drop-main" *ngIf="!dropError">
+      <div class="upload-record-video__drag-and-drop-area" *ngIf="dragging">
+        <svg
+          class="upload-record-video__file-icon"
+          version="1.1"
+          viewBox="0 0 36 42"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g fill="none" fill-rule="evenodd">
+            <path
+              fill="currentColor"
+              d="M34.406 8.79c.867.857 1.594 2.568 1.594 3.794v26.65c0 1.226-1.008 2.22-2.25 2.22H2.25c-1.242 0-2.25-.994-2.25-2.22V2.22C0 .995 1.008 0 2.25 0h21c1.242 0 2.977.717 3.844 1.573l7.312 7.218zM24 3.147v8.698h8.813c-.141-.393-.352-.786-.516-.948L24.96 3.655c-.164-.162-.563-.37-.961-.509zm9 35.348V14.805h-9.75c-1.242 0-2.25-.995-2.25-2.22V2.96H3v35.533h30zM30 28.13v7.402H6v-4.441l4.5-4.442 3 2.961 9-8.883L30 28.13zm-19.5-4.442c-2.484 0-4.5-1.99-4.5-4.441 0-2.452 2.016-4.442 4.5-4.442s4.5 1.99 4.5 4.442-2.016 4.441-4.5 4.441z"
+            ></path>
+            <path d="M-3 0h42v42H-3z"></path>
+          </g>
+        </svg>
+        <span class="upload-record-video__drag-and-drop-paragraph" translate>templates.dropHeading</span>
+      </div>
+
+      <div class="upload-record-video__drag-and-drop-browse" *ngIf="!dragging">
+        <span class="upload-record-video__drag-and-drop-paragraph" *ngIf="!file" translate>templates.selectFile</span>
+        <span
+          class="upload-record-video__drag-and-drop-paragraph"
+          *ngIf="file && fileType !== fileTypes.PHOTO"
+          translate
+        >
+          templates.selectAnotherFile
+        </span>
+        <span
+          class="upload-record-video__drag-and-drop-paragraph"
+          *ngIf="file && fileType === fileTypes.PHOTO"
+          translate
+        >
+          templates.selectImageFile
+        </span>
+
+        <button
+          class="upload-record-video__drag-and-drop-browse-btn"
+          (click)="browseInput.click()"
+          translate
+          type="button"
+        >
+          templates.browse
+        </button>
+      </div>
+
+      <input
+        #browseInput
+        [accept]="ACCEPTED_INPUT"
+        (change)="handleAddFile($event)"
+        class="upload-record-video__drag-and-drop-input"
+        type="file"
+      />
+    </div>
+
+    <div class="upload-record-video__drag-and-drop-error" *ngIf="dropError">
+      <svg
+        class="upload-record-video__error-icon"
+        version="1.1"
+        viewBox="0 0 30 30"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <path
+          fill="currentColor"
+          fill-rule="evenodd"
+          d="M15.699 17.676v-7.54a.749.749 0 1 0-1.498 0v7.54a.749.749 0 1 0 1.498 0zm.284 3.34v-.053a.983.983 0 1 0-1.965 0v.053a.983.983 0 0 0 1.965 0zM4 24L15 5l11 19H4z"
+        ></path>
+      </svg>
+      <h3 class="upload-record-video__drag-and-drop-error-title">{{ dropError }}</h3>
+      <div class="upload-record-video__drag-and-drop-error-message">
+        {{ 'templates.fileCount' | translate }} {{ 'templates.formats' | translate }} <span>{{ ACCEPTED_INPUT }}</span
+        >. {{ 'templates.maxFileSize' | translate }} <span>{{ MAX_FILE_SIZE }} MB</span>.
+      </div>
+      <button class="upload-record-video__error-btn" translate (click)="dropError = null" type="button">
+        templates.tryAgain
+      </button>
+    </div>
+
+    <div class="upload-record-video__drag-and-drop-file-info" *ngIf="!dragging && !dropError">
+      {{ 'templates.fileCount' | translate }} {{ 'templates.formats' | translate }} <span>{{ ACCEPTED_INPUT }}</span
+      >. {{ 'templates.maxFileSize' | translate }} <span>{{ MAX_FILE_SIZE }} MB</span>.
+    </div>
+
+    <div class="upload-record-video__drag-and-drop-file-area" *ngIf="file && !dragging && !dropError">
+      <mpw-file-item
+        [progress]="progress"
+        [file]="file"
+        (cancelled)="handleFileCancel()"
+        [showCancelBtn]="true"
+      ></mpw-file-item>
+    </div>
+
+    <div class="upload-record-video__file-desc" *ngIf="data?.getDescription">
+      <span class="upload-record-video__file-desc-note" translate>templates.bestPracticeNote</span>
+      <div class="upload-record-video__file-desc-input-wrapper">
+        <label class="upload-record-video__file-desc-input-label">
+          <input
+            autocomplete="off"
+            type="text"
+            name="bestpractice"
+            class="upload-record-video__file-desc-input"
+            [formControl]="nameControl"
+            maxlength="32"
+            placeholder="{{'templates.giveBestPracticeName' | translate}}"
+          />
+        </label>
+
+        <mpw-input-error
+          *ngIf="nameControl.invalid"
+          class="text-red"
+          errorText="templates.mustNotBeEmpty"
+        ></mpw-input-error>
+      </div>
+    </div>
+
+    <div class="upload-record-video__actions" *ngIf="!dragging && !dropError">
+      <button
+        class="upload-record-video__action upload-record-video__action_grey"
+        translate
+        type="button"
+        (click)="close()"
+      >
+        cancel
+      </button>
+      <button
+        class="upload-record-video__action"
+        type="button"
+        (click)="sendVideo()"
+        [disabled]="!file || (data?.getDescription && nameControl?.invalid) || !!progress"
+      >
+        {{ (data?.getDescription ? 'save' : 'send') | translate }}
+      </button>
+    </div>
+  </div>
+</div>

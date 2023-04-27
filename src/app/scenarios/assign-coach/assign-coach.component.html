@@ -1,0 +1,56 @@
+<form
+  class="assign-coach"
+  (submit)="sendScenario()"
+  [formGroup]="assignCoachForm"
+  (keydown.enter)="$event.preventDefault()"
+>
+  <div class="dialog-close" (click)="close()">x</div>
+
+  <div class="assign-coach__title" translate>assignCoach.title</div>
+
+  <div class="assign-coach__users" *ngIf="users.length">
+    <div class="assign-coach__user" *ngFor="let user of users">
+      <mpw-user-with-avatar
+        [avaSrc]="user.avatarSm"
+        [avaBg]="user.avatarColor"
+        [firstName]="user.firstName"
+        [lastName]="user.lastName"
+      ></mpw-user-with-avatar>
+      <button class="assign-coach__remove-user" type="button" (click)="removeUser(user)">x</button>
+    </div>
+  </div>
+
+  <mat-form-field class="assign-coach__form-field">
+    <label class="assign-coach__label" for="coach-name" translate>assignCoach.label</label>
+    <input
+      #trigger="matAutocompleteTrigger"
+      id="coach-name"
+      matInput
+      type="text"
+      name="info"
+      autocomplete="off"
+      class="assign-coach__input"
+      formControlName="name"
+      [matAutocomplete]="autocomplete"
+      (click)="trigger.openPanel()"
+    />
+    <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="assignCoachForm.get('name').patchValue('')">
+      <mat-option *ngFor="let user of filteredUsers" [value]="user.name" (onSelectionChange)="addUser(user)">
+        <mpw-user-with-avatar
+          [avaSrc]="user.avatar_sm"
+          [avaBg]="user.avatarColor"
+          [firstName]="user.firstName"
+          [lastName]="user.lastName"
+        ></mpw-user-with-avatar>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <button class="btn btn_margin-right" type="submit" [disabled]="assignCoachForm.invalid">
+    {{
+      (!users.length ? 'send' : users.length === 1 ? 'assignCoach.sendScenario' : 'assignCoach.sendScenarioPlural')
+        | translate: { number: users.length }
+    }}
+  </button>
+  <button class="btn btn_cancel" translate (click)="close()" type="button">cancel</button>
+</form>

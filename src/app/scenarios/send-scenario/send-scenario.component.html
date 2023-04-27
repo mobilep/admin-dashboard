@@ -1,0 +1,36 @@
+<form class="send-scenario" (submit)="onSubmit()" [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+  <div class="dialog-close" (click)="onClose()">x</div>
+
+  <div class="send-scenario__title" translate>sendScenarioDialog.title</div>
+
+  <div class="send-scenario__users" *ngIf="selected.length">
+    <div class="send-scenario__user" *ngFor="let item of selected">
+      <mpw-user-with-avatar [firstName]="item?.name" [lastName]="' '"></mpw-user-with-avatar>
+      <button class="send-scenario__remove-user" type="button" (click)="deselectItem(item)">x</button>
+    </div>
+  </div>
+
+  <mat-form-field class="send-scenario__form-field">
+    <label class="send-scenario__label" for="coach-name" translate> sendScenarioDialog.label </label>
+    <input
+      #trigger="matAutocompleteTrigger"
+      id="coach-name"
+      matInput
+      type="text"
+      name="info"
+      autocomplete="off"
+      class="send-scenario__input"
+      formControlName="name"
+      [matAutocomplete]="autocomplete"
+      (click)="trigger.openPanel()"
+    />
+    <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="form.get('name').patchValue('')">
+      <mat-option *ngFor="let item of (filteredItems$ | async)" [value]="item.name" (onSelectionChange)="select(item)">
+        {{ item?.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <button class="btn btn_margin-right" type="submit" [disabled]="form.invalid || sending">{{ submitBtnText }}</button>
+  <button class="btn btn_cancel" translate (click)="onClose()" type="button">cancel</button>
+</form>

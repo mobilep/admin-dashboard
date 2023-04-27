@@ -1,0 +1,269 @@
+form
+  position: static
+
+input
+  box-shadow: none
+  -moz-appearance: none
+  -webkit-appearance: none
+  &[type="text"],
+  &[type="password"],
+  &[type="email"],
+  &[type="number"]
+    display: block
+    width: 100%
+    height: 50px
+    padding: 15px 20px
+    border-radius: 4px
+    background-color: $white
+    border: solid 1px #ccd0d2
+    overflow: hidden
+    text-overflow: ellipsis
+
+input[type="color"]
+  position: static
+
+input[type="date"]
+  position: static
+
+input[type="datetime"]
+  position: static
+
+input[type="datetime-local"]
+  position: static
+
+input[type="email"]
+  position: static
+  &:focus
+    outline: none
+    border-color: $dodger-blue
+    box-shadow: none
+    -moz-appearance: none
+    -webkit-appearance: none
+
+input[type="month"]
+  position: static
+
+input[type="number"]
+  position: static
+
+input[type="password"]
+  &:focus
+    outline: none
+    border-color: $dodger-blue
+    box-shadow: none
+    -moz-appearance: none
+    -webkit-appearance: none
+
+input[type="search"]
+  position: static
+  &:focus
+    outline: none
+    border-color: $dodger-blue
+    box-shadow: none
+    -moz-appearance: none
+    -webkit-appearance: none
+
+input[type="tel"]
+  position: static
+
+input[type="text"]
+  position: static
+  &:focus
+    outline: none
+    border-color: $dodger-blue
+    box-shadow: none
+    -moz-appearance: none
+    -webkit-appearance: none
+
+input[type="time"]
+  position: static
+
+input[type="url"]
+  position: static
+
+input[type="week"]
+  position: static
+
+
+input[type="checkbox"]
+  background: #F2F3F3
+  border: 1px solid #CCD0D2
+  border-radius: 2px
+  overflow: hidden
+  width: 16px
+  height: 16px
+  vertical-align: middle
+  &:focus
+    outline: none
+
+input[type="submit"]
+  outline: none
+  border-color: $dodger-blue
+  box-shadow: none
+  -moz-appearance: none
+  -webkit-appearance: none
+
+input:not([type="submit"])[disabled]
+  background: #f9f9f9
+  cursor: no-drop
+
+input::-webkit-contacts-auto-fill-button
+  visibility: hidden
+  display: none !important
+  pointer-events: none
+  position: absolute
+  right: 0
+
+select
+  box-shadow: none
+  -moz-appearance: none
+  -webkit-appearance: none
+  display: block
+  width: 100%
+  height: 50px
+  padding: 15px 25px 15px 20px
+  border-radius: 4px
+  background-color: $white
+  border: solid 1px #ccd0d2
+  text-overflow: ellipsis
+  font-size: 15px
+  position: relative
+  overflow: hidden
+  &:focus
+    outline: none
+    border-color: $dodger-blue
+    box-shadow: none
+    -moz-appearance: none
+    -webkit-appearance: none
+  &::-ms-expand
+    display: none
+
+textarea
+  position: static
+  display: block
+  width: 100%
+  height: 50px
+  padding: 15px 20px
+  border-radius: 4px
+  background-color: $white
+  border: solid 1px #ccd0d2
+  overflow: hidden
+  text-overflow: ellipsis
+  resize: vertical
+  &:focus
+    outline: none
+    border-color: $dodger-blue
+    box-shadow: none
+    -moz-appearance: none
+    -webkit-appearance: none
+
+label
+  font-size: 14px
+  text-align: left
+  color: $cool-grey
+  letter-spacing: 1px
+  padding: 5px 0
+  display: block
+  &:focus
+    outline: none
+
+.input-group
+  position: relative
+  margin-bottom: 35px
+  &__right
+    position: absolute
+    top: 5px
+    margin: auto
+    right: 0
+    font-size: 15px
+  &-mini-padding
+    margin-bottom: 15px
+  &_btn
+    position: relative
+    input[type="email"]
+      padding-right: 80px
+    input[type="submit"]
+      position: absolute
+      right: 0
+      bottom: 0
+      margin: auto
+      width: 80px
+      height: 50px
+      background: transparent
+      font-size: 15px
+      padding: 0
+      color: #309FFF
+      text-align: center
+      border-left: 1px solid #CCCFD2
+      border-radius: 0
+
+.select-wrapper
+  position: relative
+  &:before
+    width: 0
+    height: 0
+    border-left: 6px solid transparent
+    border-right: 6px solid transparent
+    border-top: 6px solid
+    color: #f3423c
+    position: absolute
+    content: ''
+    right: 10px
+    bottom: 0
+    top: 0
+    z-index: 2
+    margin: auto
+
+.ng-invalid.ng-touched
+  border-color: $red
+
+.ng-invalid.ng-touched.template-create__form
+  border-color: $borderColor
+
+.form-title
+  font-size: 22px
+  line-height: 1.18
+  letter-spacing: 0.5px
+  color: #f3423c
+  margin-bottom: 27px
+  &:focus
+    outline: none
+
+.checkbox-group
+  input
+    position: absolute
+    width: 1px
+    height: 1px
+    overflow: hidden
+    z-index: -1
+    &:checked ~ label:before
+      background: #309FFF url('/assets/checkWight.svg') center 2px no-repeat
+      background-size: 11px 11px
+      border-color: #309FFF
+
+  label
+    display: inline-block
+    vertical-align: middle
+    cursor: pointer
+    position: relative
+    padding-left: 25px
+    -webkit-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+    white-space: pre
+    text-overflow: ellipsis
+    &:before
+      content: ''
+      position: absolute
+      left: 0
+      top: 0
+      bottom: 0
+      margin: auto
+      background: #F2F3F3
+      border: 1px solid #CCD0D2
+      border-radius: 2px
+      overflow: hidden
+      width: 16px
+      height: 16px
+      vertical-align: middle

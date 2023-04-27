@@ -1,0 +1,119 @@
+\:host
+  display: block
+  overflow: hidden
+
+pre
+  white-space: pre-wrap
+
+.flex
+  padding: 15px 0 0
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+.flex__col
+  display: flex
+  align-items: center
+
+.flex__col-end
+  justify-content: flex-end
+
+.title
+  font-size: 14px
+  color: #202222
+  margin-right: 15px
+
+.link-header
+  @media (max-width: 330px)
+    width: 60px
+    display: inline-block
+    vertical-align: middle
+    overflow: hidden
+    white-space: nowrap
+    text-overflow: ellipsis
+
+pre
+  margin: 0
+  padding: 0
+
+.wrapper_content
+  padding-top: 10px
+  padding-bottom: 100px
+
+.show-sm
+  display: none !important
+  @media (min-width: 576px)
+    display: block !important
+
+.fileContainer
+  overflow: hidden
+  position: relative
+  vertical-align: top
+  font-size: 14px
+  text-align: left
+  color: #1e9efb
+  letter-spacing: 0
+  padding: 0
+  display: inline-block
+  cursor: pointer
+  &--disabled
+    pointer-events: none
+  &:hover
+    color: #82c9fd
+  &.btn_large
+    display: flex
+    color: #fff
+    &:hover
+      color: #fff
+  [type=file]
+    display: block
+    font-size: 999px
+    filter: alpha(opacity=0)
+    opacity: 0
+    position: absolute
+    overflow: hidden
+    left: 0
+    top: 0
+    height: 1px
+    width: 1px
+
+.link
+  margin-left: 10px
+  @media (max-width: 577px)
+    &_trash
+      vertical-align: middle
+      display: inline-block
+      width: 15px
+      height: 15px
+      font-size: 0
+      background: url("../../../../assets/trash.svg") center center no-repeat
+      background-size: 15px 15px
+    &_send
+      vertical-align: middle
+      display: inline-block
+      font-size: 0
+      width: 15px
+      height: 15px
+      background: url("../../../../assets/send.svg") center center no-repeat
+      background-size: 15px 15px
+
+@media (max-width: 577px)
+  .flex-options
+    flex-direction: column
+    padding-top: 0
+    align-items: start
+
+  .flex-options__links
+    margin-top: 10px
+
+    .link-header:first-child
+      margin-left: 0
+
+@media (max-width: 400px)
+  .people__selected
+    width: 82px
+    display: inline-block
+    white-space: nowrap
+    text-overflow: ellipsis
+    overflow: hidden
+    vertical-align: middle

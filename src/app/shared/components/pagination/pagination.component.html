@@ -1,0 +1,25 @@
+<div class="pagination">
+  <div class="pagination__section">
+    <span class="pagination__section-label" translate>common.itemsPerPage</span>
+    <ul class="list-no-style pagination__options-list">
+      <li *ngFor="let option of itemsPerPageOptions" class="pagination__option">
+        <a
+          class="pagination__option-link"
+          [class.pagination__option-link--current]="option === itemsPerPage"
+          (click)="itemsPerPageChange.emit(option)"
+        >
+          {{ option }}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="pagination__section">
+    <span class="pagination__section-label" translate>common.page</span>
+    <pagination-controls
+      (pageChange)="pageChange.emit($event)"
+      [maxSize]="maxSize"
+      [directionLinks]="false"
+    ></pagination-controls>
+  </div>
+</div>

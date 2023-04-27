@@ -1,0 +1,426 @@
+@import 'theme/primary'
+@import 'state/typografy'
+
+$panel-height: 60px
+
+button
+  cursor: pointer
+  border: none
+  background-color: transparent
+
+  &:focus
+    outline: none
+
+.upload-record-video
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  position: relative
+
+  &__select
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    padding: 40px 24px
+
+  &__record-player-panel,
+  &__recorder-panel
+    width: 100%
+    height: $panel-height
+    display: flex
+    position: relative
+    align-items: center
+    justify-content: center
+    background-color: rgba(255, 255, 255, .85)
+
+  &__recorder-panel-timer
+    position: absolute
+    left: 20px
+    color: $red
+
+  &__record-panel-btn
+    height: 20px
+    width: 20px
+    border-radius: 50%
+    background-color: $red
+
+    &_active
+      border-radius: 5px
+
+  &__close-btn
+    cursor: pointer
+    position: absolute
+    top: 10px
+    right: 10px
+    background: none
+    color: rgb(147, 152, 154)
+
+    &_outside
+      top: -8px
+      right: -41px
+      color: $white
+
+  &__icon
+    margin-bottom: 15px
+
+  &__close-icon
+    height: 31px
+    width: 31px
+
+  &__error-btn,
+  &__action,
+  &__drag-and-drop-browse-btn,
+  &__record-player-btn,
+  &__upload-btn,
+  &__record-btn
+    background-color: $red
+    border-radius: 10px
+    border-width: 1px
+    border-style: solid
+    border-color: $red
+    color: $white
+    cursor: pointer
+    font-size: $text-md
+    transition: background-color .1s ease-in-out, border-color .1s ease-in-out, opacity .1s ease-in-out
+    user-select: none
+
+  &__error-btn,
+  &__action,
+  &__drag-and-drop-browse-btn,
+  &__record-player-btn,
+  &__record-btn
+    margin-bottom: 15px
+    padding: 8px 26px
+
+    &:hover
+      background-color: $dark-red
+      border-color: $dark-red
+
+  &__drag-and-drop-browse-btn
+    margin-top: 30px
+
+  &__record-player-btn
+    margin-bottom: 0
+    padding: 8px 66px
+
+  &__upload-btn
+    font-size: 16px
+    background-color: transparent
+    border: none
+    color: $red
+    padding: 5px 16px
+
+    &:hover
+      background-color: transparent
+      text-decoration: underline
+      color: $dark-red
+
+  &__switch-camera-btn
+    display: block
+    position: absolute
+    right: 20px
+    top: 20px
+    width: 50px
+    height: 50px
+
+  &__switch-camera-icon
+    color: $white
+    height: 100%
+    width: 100%
+
+  &__record-result
+    width: 100%
+    height: 100%
+    background-size: cover
+
+  &__record-result-actions
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-evenly
+    background-color: rgba(255, 255, 255, .8)
+
+  &__record-result-action
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    height: 80px
+    padding: 0
+    border: none
+    border-radius: unset
+    background-color: transparent
+    color: $red
+    cursor: pointer
+
+  &__record-result-icon
+    height: 50px
+    width: 50px
+
+  &__record-player
+    position: relative
+    width: 100%
+    height: 100%
+
+  &__record-player-video
+    display: block
+    height: calc(100% - #{$panel-height})
+    width: 100%
+
+    &:focus
+      outline: none
+
+
+  &__record-upload
+    display: flex
+    align-items: center
+    justify-content: center
+
+  &__record-file
+    width: 60%
+
+    &_extended
+      width: 65%
+
+  &__record-with-description
+    width: 570px
+    height: 350px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+  &__record-error
+    padding: 50px
+    max-width: 570px
+    color: rgb(147, 152, 154)
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+  &__record-error-title
+    margin-top: 0
+    margin-bottom: 0.5rem
+    font-size: 30px
+    font-weight: 600
+
+  &__record-error-message
+    text-align: center
+    margin-top: 20px
+    white-space: pre-line
+    margin-bottom: 30px
+
+  &__drag-and-drop
+    overflow-y: auto
+    overflow-x: hidden
+    height: 600px
+    width: 570px
+    padding: 10px 45px
+
+  &__drag-and-drop-main
+    border: dashed 3px rgb(224, 227, 229)
+    margin: 80px 0 10px 0
+
+  &__drag-and-drop-area
+    display: flex
+    height: 260px
+    text-align: center
+    justify-content: center
+    align-items: center
+
+  &__drag-and-drop-browse
+    height: 215px
+    padding: 0 45px
+    display: flex
+    flex-direction: column
+    background-color: $light-grey
+    text-align: center
+    justify-content: center
+    align-items: center
+
+  &__drag-and-drop-paragraph
+    font-size: 22px
+    line-height: 30px
+    font-weight: 600
+    color: rgb(3, 3, 3)
+
+  &__drag-and-drop-input
+    display: none
+
+  &__file-icon
+    width: 36px
+    height: 42px
+    color: $red
+    margin-right: 20px
+
+  &__drag-and-drop-error-message,
+  &__drag-and-drop-file-info
+    font-size: 14px
+    color: rgb(3, 3, 3)
+    font-weight: 400
+    line-height: 19px
+    span
+      color: $red
+
+  &__drag-and-drop-file-area
+    padding-top: 20px
+
+  &__drag-and-drop-file-item
+    display: flex
+    padding: 10px 0
+
+  &__drag-and-drop-file-item-size
+    font-size: 12px
+    line-height: 17px
+    font-weight: 400
+    color: rgb(147, 152, 154)
+    padding-left: 30px
+
+  &__drag-and-drop-file-item-icon
+    flex: 0 0 42px
+
+  &__drag-and-drop-file-item-main
+    flex: 0 0 calc(100% - 42px - 30px)
+    max-width: calc(100% - 42px - 30px)
+    padding: 0 20px
+
+  &__drag-and-drop-file-item-info
+    display: flex
+    align-items: center
+
+  &__drag-and-drop-file-item-name
+    font-size: 14px
+    line-height: 19px
+    color: rgb(3, 3, 3)
+    font-weight: 600
+    flex: 0 0 calc(100% - 100px)
+    text-overflow: ellipsis
+    white-space: nowrap
+    overflow: hidden
+
+  &__drag-and-drop-file-item-side
+    flex: 0 0 30px
+    display: flex
+
+  &__drag-and-drop-progress
+    position: relative
+
+  &__drag-and-drop-progress-bar
+    height: 2px
+    border-radius: 1px
+    background-color: $red
+    opacity: .28
+
+  &__drag-and-drop-progress-value
+    position: absolute
+    left: 0
+    top: 17px
+    height: 2px
+    border-radius: 1px
+    background-color: $red
+
+  &__drag-and-drop-progress-number
+    font-size: 12px
+    line-height: 17px
+    color: rgb(147, 152, 154)
+    font-weight: 400
+    text-align: right
+
+
+  &__file-desc
+    padding: 20px 0
+    font-size: 14px
+    color: rgb(32, 34, 34)
+    font-weight: 400
+    line-height: 19px
+
+  &__file-desc-note
+    font-size: 16px
+    font-weight: 600
+
+  &__file-desc-input-wrapper
+    position: relative
+    width: 100%
+    border-top: none
+    margin-top: 10px
+
+  &__file-desc-input-label
+    position: relative
+    padding: 0
+
+  &__file-desc-input
+    padding: 0
+    color: $primaryText
+    width: 100%
+    border: none
+    text-overflow: ellipsis
+    background-color: transparent
+    border-radius: 10px
+    transition: border-color .2s linear
+    height: 30px
+    font-weight: 400
+    font-size: $text-md
+
+    &::placeholder
+      color: $secondaryText
+
+  &__actions
+    text-align: center
+    padding-top: 30px
+
+  &__action
+    min-width: 150px
+    margin: 0 10px
+
+    &:disabled
+      cursor: not-allowed
+      opacity: .7
+
+    &_grey
+      background-color: rgb(245, 245, 245)
+      border-color: rgb(245, 245, 245)
+      color: rgb(243, 66, 60)
+
+      &:hover
+        background-color: rgb(255, 255, 255)
+        border-color: rgb(243, 66, 60)
+
+  &__drag-and-drop-error
+    display: flex
+    flex-direction: column
+    align-items: center
+    padding-top: 30px
+    height: 100%
+    max-width: 570px
+
+  &__error-icon
+    color: $red
+    width: 60px
+    height: 60px
+    margin-bottom: 30px
+
+  &__drag-and-drop-error-title
+    text-align: center
+    font-size: 22px
+    line-height: 30px
+    font-weight: 400
+    color: rgb(3, 3, 3)
+    margin-bottom: 10px
+
+
+  &__drag-and-drop-error-message
+    text-align: center
+    margin-top: 20px
+    margin-bottom: 30px
+    white-space: pre-line
+
+  &__error-btn
+    width: 150px
+
+    &_auto
+      width: auto

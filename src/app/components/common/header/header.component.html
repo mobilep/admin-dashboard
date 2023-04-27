@@ -1,0 +1,121 @@
+<div class="spinning-preloader-container" *ngIf="!isActive"><div class="spinning-preloader-elements"></div></div>
+<div class="header container container-padding" *ngIf="isActive">
+  <div class="header__side header__side_left">
+    <div class="noSelect" *ngIf="!companies?.length">
+      <div class="header__add-company" (click)="createCompany()" (touchend)="createCompany()" translate>newCompany</div>
+    </div>
+    <div
+      class="select-style select-style_left"
+      *ngIf="companies?.length"
+      (mouseenter)="toggleClickFn($event)"
+      (mouseleave)="toggleLeaveFn($event)"
+      (touchend)="toggleTouchFn($event)"
+    >
+      <div class="select-style__title header__selected-title">
+        <span [attr.data-balloon]="company?.name" [attr.data-balloon-pos]="'right'">
+          <span class="select-style__text select-style__text_bold">{{ company?.name }}</span>
+          <span class="select-style__arrow" *ngIf="!isManager"></span>
+        </span>
+      </div>
+      <div class="select-style__dropdown" *ngIf="!isManager">
+        <div class="select-style__item" (click)="editCompany()" (touchend)="editCompany()" translate>
+          viewEditDetails
+        </div>
+        <div
+          class="select-style__item select-style__item_red"
+          *ngIf="isAdmin"
+          (click)="onDeleteCompany()"
+          (touchend)="onDeleteCompany()"
+        >
+          {{ 'delete' | translate }} {{ company?.name }}
+        </div>
+        <div class="select-style__group" *ngIf="isAdmin">
+          <div class="select-style__group-title" translate>companies</div>
+          <ng-template ngFor let-item [ngForOf]="companies$ | async">
+            <div
+              class="select-style__item"
+              (click)="findSelectCompany(item)"
+              (touchend)="findSelectCompany(item)"
+              [ngClass]="{ 'select-style__item_active': company._id === item?._id }"
+            >
+              {{ item.name }}
+            </div>
+          </ng-template>
+        </div>
+        <div
+          class="select-style__item"
+          *ngIf="isAdmin"
+          (click)="createCompany()"
+          (touchend)="createCompany()"
+          translate
+        >
+          newCompany
+        </div>
+      </div>
+    </div>
+    <div class="menu">
+      <div
+        class="menu__item"
+        routerLink="/company/{{ company?._id }}/metrics"
+        routerLinkActive="menu__item_active"
+        translate
+      >
+        metrics.navTitle
+      </div>
+      <div
+        class="menu__item"
+        routerLink="/company/{{ company?._id }}/scenarios"
+        routerLinkActive="menu__item_active"
+        translate
+      >
+        scenarioPage.navTitle
+      </div>
+      <div
+        *ngIf="!isManager"
+        class="menu__item"
+        routerLink="/company/{{ company?._id }}/people"
+        routerLinkActive="menu__item_active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        translate
+      >
+        people
+      </div>
+    </div>
+  </div>
+  <div class="header__side header__side_right">
+    <div
+      class="select-style select-style_right"
+      (mouseenter)="toggleClickFn($event)"
+      (mouseleave)="toggleLeaveFn($event)"
+      (touchend)="toggleTouchFn($event)"
+    >
+      <div class="select-style__title header__selected-title">
+        <span class="select-style__text">{{ currentUser?.firstName }}</span> <span class="select-style__arrow"></span>
+      </div>
+
+      <!-- Dropdown -->
+      <ul class="select-style__dropdown">
+        <li
+          class="select-style__item"
+          (click)="changeLanguage('fr')"
+          (touchend)="changeLanguage('fr')"
+          [ngClass]="{ 'select-style__item_active': currentLanguage === 'fr' }"
+        >
+          Français
+        </li>
+        <li
+          class="select-style__item"
+          (click)="changeLanguage('en')"
+          (touchend)="changeLanguage('en')"
+          [ngClass]="{ 'select-style__item_active': currentLanguage === 'en' }"
+        >
+          English
+        </li>
+        <li class="select-style__item" (click)="editPassword()" (touchend)="editPassword()" translate>
+          changePassword
+        </li>
+        <li class="select-style__item" (click)="onLogOut()" (touchend)="onLogOut()" translate>loginOut</li>
+      </ul>
+    </div>
+  </div>
+</div>

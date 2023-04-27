@@ -1,0 +1,25 @@
+@import 'state/_typografy'
+@import 'theme/primary'
+
+::ng-deep .templates-table__name-cell
+  width: 60%
+
+::ng-deep .templates-table__created-at-cell
+  width: 125px
+
+::ng-deep .templates-table__options-cell
+  width: 50px
+
+  svg
+    fill: $red
+
+
+.templates
+  display: flex
+  flex-direction: column
+
+  &__create
+    font-size: $text-sm
+    align-self: flex-end
+    cursor: pointer
+    margin-bottom: 15px

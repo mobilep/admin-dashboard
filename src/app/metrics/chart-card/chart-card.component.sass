@@ -1,0 +1,50 @@
+@import 'theme/primary'
+@import 'state/typografy'
+
+.chart-card__title
+  font-weight: 700
+  color: $black
+  margin-bottom: 14px
+
+.chart-wrapper
+  align-items: center
+  display: flex
+
+.chart
+  margin-right: 36px
+  position: relative
+
+.chart__label
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  text-align: center
+
+.chart__label-number
+  font-weight: 700
+  color: $black
+
+.chart__label-text
+  font-size: $text-xs
+  color: $secondaryText
+  text-transform: capitalize
+
+::ng-deep .ct-series:not(:only-child) .ct-slice-donut-solid
+  stroke: #fff
+  stroke-width: 2px
+
+::ng-deep .ct-series-a .ct-slice-donut-solid
+  fill: #309fff
+
+::ng-deep .ct-series-b .ct-slice-donut-solid
+  fill: #ffe038
+
+::ng-deep .ct-series-c .ct-slice-donut-solid
+  fill: #ccd0d2
+
+::ng-deep .ct-series-d .ct-slice-donut-solid
+  fill: #ffc0cb
+
+::ng-deep .ct-series-e .ct-slice-donut-solid
+  fill: #f3663c

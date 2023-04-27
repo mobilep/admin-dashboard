@@ -1,0 +1,20 @@
+<div class="chart-card card card--md">
+  <div class="chart-card__title">{{ title }}</div>
+
+  <div *ngIf="!chartData.count" class="no-data-placeholder" translate>metrics.noData</div>
+
+  <div *ngIf="chartData.count" class="chart-wrapper">
+    <!-- chart -->
+    <div class="chart">
+      <div class="chart__label">
+        <div class="chart__label-number">{{ chartData.count }}</div>
+        <div class="chart__label-text">
+          {{ chartData.count | i18nPlural: { '=1': 'common.scenario', other: 'common.scenarios' } | translate }}
+        </div>
+      </div>
+      <x-chartist type="Pie" [data]="data" [options]="options"></x-chartist>
+    </div>
+
+    <mpw-chart-legend [ranges]="chartData.ranges"></mpw-chart-legend>
+  </div>
+</div>

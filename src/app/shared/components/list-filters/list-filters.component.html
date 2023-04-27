@@ -1,0 +1,11 @@
+<div class="list-filters">
+  <mpw-section-toggle
+    class="list-filters__toggle"
+    [expandedText]="'common.hideFilters' | translate"
+    [collapsedText]="'common.showFilters' | translate"
+    [isExpanded]="isExpanded"
+    (toggle)="toggleFilters()"
+  ></mpw-section-toggle>
+
+  <div *ngIf="isExpanded" class="list-filters__content"><ng-content></ng-content></div>
+</div>
